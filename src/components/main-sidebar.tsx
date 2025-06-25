@@ -50,7 +50,7 @@ export function MainSidebar() {
           <SidebarMenu>
             {menuItems.map((item) => (
               <SidebarMenuItem key={item.href}>
-                <Link href={item.href} legacyBehavior passHref>
+                <Link href={item.href}>
                   <SidebarMenuButton
                     isActive={pathname === item.href}
                     tooltip={item.label}
@@ -75,7 +75,7 @@ export function MainSidebar() {
                     <span className="text-xs text-muted-foreground">admin@focusfreight.com</span>
                 </div>
             </div>
-            <Link href="/login" legacyBehavior passHref>
+            <Link href="/login">
                 <SidebarMenuButton tooltip="Logout">
                     <LogOut className="h-5 w-5" />
                     <span>Logout</span>
