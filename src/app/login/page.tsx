@@ -7,12 +7,14 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+import Link from "next/link"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -24,49 +26,51 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md shadow-2xl">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4 flex items-center justify-center rounded-full bg-primary/10 p-4 w-20 h-20">
-            <Truck className="h-10 w-10 text-primary" />
-          </div>
-          <CardTitle className="font-headline text-3xl font-bold text-primary">
-            FocusFreight TMS
-          </CardTitle>
+    <div className="flex min-h-screen items-center justify-center bg-background p-4 font-sans">
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
-            Welcome back! Please sign in to your account.
+            Enter your email below to login to your account.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div className="space-y-2">
+        <CardContent className="grid gap-4">
+          <form onSubmit={handleLogin} className="grid gap-4">
+            <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                <Input id="email" type="email" placeholder="john.doe@example.com" required className="pl-10" />
-              </div>
+              <Input id="email" type="email" placeholder="m@example.com" required />
             </div>
-            <div className="space-y-2">
+            <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
-               <div className="relative">
-                <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                <Input id="password" type="password" placeholder="••••••••" required className="pl-10" />
-              </div>
+              <Input id="password" type="password" required />
             </div>
-            <Button type="submit" className="w-full font-bold">
-              Sign In
+            <Button type="submit" className="w-full">
+              Sign in
             </Button>
           </form>
-          <div className="my-6 flex items-center">
-            <Separator className="flex-1" />
-            <span className="mx-4 text-xs text-muted-foreground">OR</span>
-            <Separator className="flex-1" />
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">
+                Or continue with
+              </span>
+            </div>
           </div>
           <Button variant="outline" className="w-full" onClick={() => router.push('/dashboard')}>
-            <Chrome className="mr-2 h-5 w-5" />
-            Sign in with Google
+            <Chrome className="mr-2 h-4 w-4" />
+            Google
           </Button>
         </CardContent>
+        <CardFooter>
+          <div className="mt-4 text-center text-sm">
+            Don&apos;t have an account?{" "}
+            <Link href="#" className="underline">
+              Sign up
+            </Link>
+          </div>
+        </CardFooter>
       </Card>
     </div>
   )

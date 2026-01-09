@@ -25,6 +25,8 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { Button } from "./ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 
 const menuItems = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
@@ -39,49 +41,45 @@ export function MainSidebar() {
   const pathname = usePathname()
 
   return (
-      <div className="flex h-full flex-col">
-        <SidebarHeader className="border-b">
-          <div className="flex items-center gap-2 py-2">
-            <TruckIcon className="h-8 w-8 text-primary" />
-            <span className="font-headline text-lg font-semibold text-primary">FocusFreight</span>
-          </div>
+    <div className="hidden border-r bg-sidebar md:block h-full">
+      <div className="flex h-full max-h-screen flex-col gap-2">
+        <SidebarHeader className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+          <Link href="/" className="flex items-center gap-2 font-semibold">
+            <TruckIcon className="h-6 w-6 text-primary" />
+            <span className="text-primary-foreground">FocusFreight</span>
+          </Link>
         </SidebarHeader>
-        <SidebarContent className="flex-1 overflow-y-auto">
+        <SidebarContent className="flex-1">
           <SidebarMenu>
             {menuItems.map((item) => (
               <SidebarMenuItem key={item.href}>
-                <Link href={item.href}>
+                <Link href={item.href} className="w-full">
                   <SidebarMenuButton
                     isActive={pathname === item.href}
-                    tooltip={item.label}
+                    className="w-full justify-start"
                   >
-                    <item.icon className="h-5 w-5" />
-                    <span>{item.label}</span>
+                    <item.icon className="h-4 w-4" />
+                    {item.label}
                   </SidebarMenuButton>
                 </Link>
               </SidebarMenuItem>
             ))}
           </SidebarMenu>
         </SidebarContent>
-        <SidebarSeparator />
-        <SidebarFooter>
-            <div className="flex items-center gap-2">
-                <Avatar className="h-9 w-9">
-                    <AvatarImage src="https://placehold.co/100x100.png" alt="User" data-ai-hint="user avatar" />
-                    <AvatarFallback>AD</AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col">
-                    <span className="text-sm font-semibold">Admin User</span>
-                    <span className="text-xs text-muted-foreground">admin@focusfreight.com</span>
-                </div>
-            </div>
-            <Link href="/login">
-                <SidebarMenuButton tooltip="Logout">
-                    <LogOut className="h-5 w-5" />
-                    <span>Logout</span>
-                </SidebarMenuButton>
-            </Link>
+        <SidebarFooter className="p-4">
+            <Card>
+                <CardHeader className="p-2 pt-0 md:p-4">
+                    <CardTitle>Upgrade to Pro</CardTitle>
+                    <CardDescription>
+                        Unlock all features and get unlimited access to our support team.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
+                    <Button size="sm" className="w-full">Upgrade</Button>
+                </CardContent>
+            </Card>
         </SidebarFooter>
       </div>
+    </div>
   )
 }

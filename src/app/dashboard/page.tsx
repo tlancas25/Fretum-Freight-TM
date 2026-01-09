@@ -7,17 +7,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { DollarSign, Truck, PackageCheck, Package } from "lucide-react"
+import { DollarSign, Truck, PackageCheck, Package, Activity } from "lucide-react"
 import { AppLayout } from "@/components/app-layout"
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Line, LineChart } from "recharts"
 import type { ChartConfig } from "@/components/ui/chart"
 
-const chartData = [
+const monthlyRevenue = [
   { month: "January", revenue: 18600 },
   { month: "February", revenue: 30500 },
   { month: "March", revenue: 23700 },
@@ -26,22 +26,40 @@ const chartData = [
   { month: "June", revenue: 21400 },
 ];
 
-const chartConfig = {
+const revenueChartConfig = {
   revenue: {
     label: "Revenue",
     color: "hsl(var(--primary))",
   },
 } satisfies ChartConfig
 
+const weeklyActivity = [
+  { day: "Mon", activity: 20 },
+  { day: "Tue", activity: 25 },
+  { day: "Wed", activity: 18 },
+  { day: "Thu", activity: 30 },
+  { day: "Fri", activity: 28 },
+  { day: "Sat", activity: 15 },
+  { day: "Sun", activity: 12 },
+];
+
+const activityChartConfig = {
+  activity: {
+    label: "Load Activity",
+    color: "hsl(var(--accent))",
+  },
+} satisfies ChartConfig;
+
+
 export default function DashboardPage() {
   return (
     <AppLayout>
-      <main className="flex flex-1 flex-col gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Revenue This Month
+                Total Revenue
               </CardTitle>
               <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
@@ -89,7 +107,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
         </div>
-        <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-1">
+        <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
           <Card className="xl:col-span-2">
             <CardHeader>
               <CardTitle>Revenue Overview</CardTitle>
@@ -98,8 +116,8 @@ export default function DashboardPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
-              <ChartContainer config={chartConfig} className="h-[300px] w-full">
-                <BarChart data={chartData} accessibilityLayer>
+              <ChartContainer config={revenueChartConfig} className="h-[300px] w-full">
+                <BarChart data={monthlyRevenue} accessibilityLayer>
                   <CartesianGrid vertical={false} />
                   <XAxis
                     dataKey="month"
@@ -117,6 +135,50 @@ export default function DashboardPage() {
                   />
                   <Bar dataKey="revenue" fill="var(--color-revenue)" radius={4} />
                 </BarChart>
+              </ChartContainer>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Weekly Activity</CardTitle>
+              <CardDescription>
+                A summary of load activity over the last week.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ChartContainer config={activityChartConfig} className="h-[300px] w-full">
+                <LineChart
+                  data={weeklyActivity}
+                  margin={{
+                    top: 5,
+                    right: 10,
+                    left: 10,
+                    bottom: 0,
+                  }}
+                >
+                  <CartesianGrid vertical={false} />
+                  <XAxis
+                    dataKey="day"
+                    tickLine={false}
+                    axisLine={false}
+                    tickMargin={8}
+                  />
+                  <YAxis
+                    tickFormatter={(value) => `${value}`}
+                    allowDecimals={false}
+                  />
+                  <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent hideLabel />}
+                  />
+                  <Line
+                    dataKey="activity"
+                    type="monotone"
+                    stroke="var(--color-activity)"
+                    strokeWidth={2}
+                    dot={true}
+                  />
+                </LineChart>
               </ChartContainer>
             </CardContent>
           </Card>
