@@ -1,3 +1,5 @@
+"use client"
+
 import type { ReactNode } from 'react';
 import { SidebarProvider, Sidebar, SidebarInset } from '@/components/ui/sidebar';
 import { MainSidebar } from '@/components/main-sidebar';
