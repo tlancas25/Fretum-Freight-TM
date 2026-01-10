@@ -3,8 +3,16 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'FocusFreight TMS',
-  description: 'Streamlined Trucking Management',
+  title: 'FocusFreight TMS | Enterprise Transportation Management',
+  description: 'The all-in-one transportation management system built for modern logistics companies. Real-time tracking, dispatch management, invoicing, and more.',
+  keywords: ['TMS', 'transportation management', 'freight', 'logistics', 'dispatch', 'trucking'],
+  authors: [{ name: 'FocusFreight' }],
+  creator: 'FocusFreight',
+  openGraph: {
+    title: 'FocusFreight TMS | Enterprise Transportation Management',
+    description: 'The all-in-one transportation management system built for modern logistics companies.',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({

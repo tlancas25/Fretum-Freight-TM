@@ -1,27 +1,43 @@
 "use client"
 
 import type { ReactNode } from 'react';
-import { SidebarProvider, Sidebar, SidebarInset } from '@/components/ui/sidebar';
+import { SidebarProvider, Sidebar, SidebarInset, SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
 import { MainSidebar } from '@/components/main-sidebar';
 import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
-import { CircleUser, PanelLeft, Search } from 'lucide-react';
-import { useSidebar } from './ui/sidebar';
+import { CircleUser, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Input } from './ui/input';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
+import { cn } from '@/lib/utils';
 
 function Header() {
-    const { toggleSidebar } = useSidebar();
+    const { toggleSidebar, state } = useSidebar();
+    const isCollapsed = state === "collapsed";
+    
     return (
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
-            <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8 md:hidden"
-                onClick={toggleSidebar}
-            >
-                <PanelLeft className="h-5 w-5" />
-                <span className="sr-only">Toggle Menu</span>
-            </Button>
+        <header className="flex h-14 items-center gap-4 border-b bg-white px-4 lg:h-[60px] lg:px-6 sticky top-0 z-20">
+            <TooltipProvider>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={toggleSidebar}
+                        >
+                            {isCollapsed ? (
+                                <ChevronRight className="h-5 w-5" />
+                            ) : (
+                                <ChevronLeft className="h-5 w-5" />
+                            )}
+                            <span className="sr-only">Toggle Sidebar</span>
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="right">
+                        <p>{isCollapsed ? "Expand sidebar" : "Collapse sidebar"} (Ctrl+B)</p>
+                    </TooltipContent>
+                </Tooltip>
+            </TooltipProvider>
             <div className="w-full flex-1">
                 <form>
                     <div className="relative">
@@ -56,18 +72,14 @@ function Header() {
 
 export function AppLayout({ children }: { children: ReactNode }) {
   return (
-    <SidebarProvider>
-      <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-        <Sidebar>
-            <MainSidebar />
-        </Sidebar>
-        <div className="flex flex-col">
-            <Header />
-            <SidebarInset>
-                {children}
-            </SidebarInset>
-        </div>
-      </div>
+    <SidebarProvider defaultOpen={true}>
+      <MainSidebar />
+      <SidebarInset className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-1 overflow-auto">
+          {children}
+        </main>
+      </SidebarInset>
     </SidebarProvider>
   );
 }

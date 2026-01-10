@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
@@ -10,9 +10,26 @@ import {
   FileText,
   Users,
   LogOut,
-  UserCircle,
   TruckIcon,
-  ScanLine
+  ScanLine,
+  Settings,
+  Plug,
+  BarChart3,
+  Building2,
+  HelpCircle,
+  Bell,
+  Search,
+  Plus,
+  ChevronDown,
+  ChevronRight,
+  Wallet,
+  MapPin,
+  Clock,
+  Shield,
+  Headphones,
+  BookOpen,
+  MessageSquare,
+  Mail
 } from "lucide-react"
 import {
   Sidebar,
@@ -23,63 +40,394 @@ import {
   SidebarMenuButton,
   SidebarFooter,
   SidebarSeparator,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarGroupContent,
+  useSidebar,
 } from "@/components/ui/sidebar"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Button } from "./ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
+import { Badge } from "./ui/badge"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip"
+import { cn } from "@/lib/utils"
 
-const menuItems = [
+// Menu item type with optional badge
+interface MenuItem {
+  href: string
+  label: string
+  icon: React.ElementType
+  badge?: number | string
+  badgeVariant?: "default" | "secondary" | "destructive" | "outline" | "inTransit" | "delivered"
+}
+
+const mainMenuItems: MenuItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
-  { href: "/loads", label: "Loads", icon: Truck },
-  { href: "/dispatch", label: "Dispatch", icon: KanbanSquare },
+  { href: "/loads", label: "Loads", icon: Truck, badge: 24 },
+  { href: "/dispatch", label: "Dispatch Board", icon: KanbanSquare, badge: 8, badgeVariant: "inTransit" },
+  { href: "/customers", label: "Customers", icon: Building2 },
+]
+
+const operationsMenuItems: MenuItem[] = [
   { href: "/loads/extract", label: "Document AI", icon: ScanLine },
-  { href: "/invoices", label: "Invoicing", icon: FileText },
-  { href: "/fleet", label: "Fleet", icon: Users },
+  { href: "/bol", label: "BOL Generator", icon: FileText },
+  { href: "/invoices", label: "Invoicing", icon: FileText, badge: 5 },
+  { href: "/fleet", label: "Fleet Management", icon: Users },
+  { href: "/tracking", label: "Live Tracking", icon: MapPin },
+  { href: "/reports", label: "Analytics", icon: BarChart3 },
+]
+
+const systemMenuItems: MenuItem[] = [
+  { href: "/integrations", label: "Integrations", icon: Plug },
+  { href: "/settings", label: "Settings", icon: Settings },
 ]
 
 export function MainSidebar() {
   const pathname = usePathname()
+  const { state } = useSidebar()
+  const isCollapsed = state === "collapsed"
+
+  const renderMenuItem = (item: MenuItem) => {
+    const isActive = pathname === item.href || 
+      (item.href !== "/dashboard" && pathname.startsWith(item.href + "/"))
+    
+    const menuButton = (
+      <SidebarMenuButton
+        isActive={isActive}
+        tooltip={isCollapsed ? item.label : undefined}
+        className={cn(
+          "w-full justify-start gap-3 transition-all duration-200 group relative",
+          isActive 
+            ? "bg-sidebar-accent text-sidebar-primary font-medium" 
+            : "hover:bg-sidebar-accent/50"
+        )}
+      >
+        <item.icon className={cn(
+          "h-4 w-4 shrink-0 transition-colors",
+          isActive ? "text-sidebar-primary" : "text-sidebar-muted group-hover:text-sidebar-foreground"
+        )} />
+        <span className={cn(
+          "flex-1 truncate",
+          isCollapsed && "sr-only"
+        )}>
+          {item.label}
+        </span>
+        {item.badge && !isCollapsed && (
+          <Badge 
+            variant={item.badgeVariant || "secondary"} 
+            className="ml-auto h-5 min-w-[20px] px-1.5 text-[10px] font-medium shrink-0"
+          >
+            {item.badge}
+          </Badge>
+        )}
+      </SidebarMenuButton>
+    )
+    
+    return (
+      <SidebarMenuItem key={item.href}>
+        <Link href={item.href} className="w-full">
+          {isCollapsed ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                {menuButton}
+              </TooltipTrigger>
+              <TooltipContent side="right" className="flex items-center gap-2">
+                {item.label}
+                {item.badge && (
+                  <Badge variant={item.badgeVariant || "secondary"} className="text-[10px]">
+                    {item.badge}
+                  </Badge>
+                )}
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            menuButton
+          )}
+        </Link>
+      </SidebarMenuItem>
+    )
+  }
 
   return (
-    <div className="hidden border-r bg-sidebar md:block h-full">
-      <div className="flex h-full max-h-screen flex-col gap-2">
-        <SidebarHeader className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-          <Link href="/" className="flex items-center gap-2 font-semibold">
-            <TruckIcon className="h-6 w-6 text-primary" />
-            <span className="text-primary-foreground">FocusFreight</span>
+    <Sidebar collapsible="icon" className="border-r border-sidebar-border">
+      <TooltipProvider delayDuration={0}>
+        {/* Logo Header */}
+        <SidebarHeader className={cn(
+          "flex h-16 items-center border-b border-sidebar-border",
+          isCollapsed ? "px-2 justify-center" : "px-4"
+        )}>
+          <Link href="/" className="flex items-center gap-3 font-semibold group">
+            <div className={cn(
+              "flex items-center justify-center rounded-xl bg-gradient-to-br from-brand-blue-500 to-brand-blue-600 shadow-lg shadow-brand-blue-500/25 group-hover:shadow-brand-blue-500/40 transition-shadow",
+              isCollapsed ? "h-8 w-8" : "h-10 w-10"
+            )}>
+              <TruckIcon className={cn(
+                "text-white",
+                isCollapsed ? "h-4 w-4" : "h-5 w-5"
+              )} />
+            </div>
+            {!isCollapsed && (
+              <div className="flex flex-col">
+                <span className="text-lg font-headline font-bold text-sidebar-foreground tracking-tight">
+                  FocusFreight
+                </span>
+                <span className="text-[10px] uppercase tracking-widest text-sidebar-muted font-medium">
+                  Enterprise TMS
+                </span>
+              </div>
+            )}
           </Link>
         </SidebarHeader>
-        <SidebarContent className="flex-1">
-          <SidebarMenu>
-            {menuItems.map((item) => (
-              <SidebarMenuItem key={item.href}>
-                <Link href={item.href} className="w-full">
-                  <SidebarMenuButton
-                    isActive={pathname === item.href}
-                    className="w-full justify-start"
+
+        {/* Quick Actions */}
+        {!isCollapsed && (
+          <div className="px-3 py-3 border-b border-sidebar-border">
+            <div className="flex gap-2">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link href="/loads/new" className="flex-1">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full h-9 gap-2 text-xs font-medium border-sidebar-border hover:bg-sidebar-accent hover:border-sidebar-primary/50"
+                    >
+                      <Plus className="h-3.5 w-3.5" />
+                      New Load
+                    </Button>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <p>Create new load</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link href="/quotes/new" className="flex-1">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full h-9 gap-2 text-xs font-medium border-sidebar-border hover:bg-sidebar-accent hover:border-sidebar-primary/50"
+                    >
+                      <FileText className="h-3.5 w-3.5" />
+                      Quick Quote
+                    </Button>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <p>Create quick quote</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </div>
+        )}
+
+        {/* Collapsed Quick Actions */}
+        {isCollapsed && (
+          <div className="py-2 border-b border-sidebar-border flex flex-col items-center gap-1">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link href="/loads/new">
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className="h-8 w-8"
                   >
-                    <item.icon className="h-4 w-4" />
-                    {item.label}
-                  </SidebarMenuButton>
+                    <Plus className="h-4 w-4" />
+                  </Button>
                 </Link>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p>New Load</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        )}
+        
+        {/* Main Navigation */}
+        <SidebarContent className="flex-1 overflow-y-auto">
+          <SidebarGroup>
+            {!isCollapsed && (
+              <SidebarGroupLabel className="px-3 text-xs font-semibold uppercase tracking-wider text-sidebar-muted">
+                Main
+              </SidebarGroupLabel>
+            )}
+            <SidebarGroupContent>
+              <SidebarMenu className={cn(isCollapsed ? "px-1" : "px-2")}>
+                {mainMenuItems.map(renderMenuItem)}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          <SidebarGroup>
+            {!isCollapsed && (
+              <SidebarGroupLabel className="px-3 text-xs font-semibold uppercase tracking-wider text-sidebar-muted">
+                Operations
+              </SidebarGroupLabel>
+            )}
+            <SidebarGroupContent>
+              <SidebarMenu className={cn(isCollapsed ? "px-1" : "px-2")}>
+                {operationsMenuItems.map(renderMenuItem)}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+
+          <SidebarGroup>
+            {!isCollapsed && (
+              <SidebarGroupLabel className="px-3 text-xs font-semibold uppercase tracking-wider text-sidebar-muted">
+                System
+              </SidebarGroupLabel>
+            )}
+            <SidebarGroupContent>
+              <SidebarMenu className={cn(isCollapsed ? "px-1" : "px-2")}>
+                {systemMenuItems.map(renderMenuItem)}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
         </SidebarContent>
-        <SidebarFooter className="p-4">
-            <Card>
-                <CardHeader className="p-2 pt-0 md:p-4">
-                    <CardTitle>Upgrade to Pro</CardTitle>
-                    <CardDescription>
-                        Unlock all features and get unlimited access to our support team.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
-                    <Button size="sm" className="w-full">Upgrade</Button>
-                </CardContent>
-            </Card>
+
+        {/* Live Status Indicator */}
+        {!isCollapsed && (
+          <div className="px-4 py-3 border-t border-sidebar-border">
+            <div className="flex items-center gap-3 p-2 rounded-lg bg-sidebar-accent/50">
+              <div className="relative">
+                <div className="w-2 h-2 rounded-full bg-brand-green-500" />
+                <div className="absolute inset-0 w-2 h-2 rounded-full bg-brand-green-500 animate-ping" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-medium text-sidebar-foreground">System Online</p>
+                <p className="text-[10px] text-sidebar-muted">All services operational</p>
+              </div>
+              <Clock className="h-3.5 w-3.5 text-sidebar-muted" />
+            </div>
+          </div>
+        )}
+
+        {/* Collapsed Status */}
+        {isCollapsed && (
+          <div className="py-2 border-t border-sidebar-border flex justify-center">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="relative p-2">
+                  <div className="w-2 h-2 rounded-full bg-brand-green-500" />
+                  <div className="absolute inset-0 m-2 w-2 h-2 rounded-full bg-brand-green-500 animate-ping" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="right">
+                <p>System Online</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        )}
+        
+        {/* Footer with User Profile */}
+        <SidebarFooter className="border-t border-sidebar-border p-2">
+          {/* Help Icons - Expanded */}
+          {!isCollapsed && (
+            <div className="flex items-center gap-1 mb-2">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link href="/help">
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-sidebar-muted hover:text-sidebar-foreground">
+                      <HelpCircle className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="top"><p>Help Center</p></TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link href="/docs">
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-sidebar-muted hover:text-sidebar-foreground">
+                      <BookOpen className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="top"><p>Documentation</p></TooltipContent>
+              </Tooltip>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-8 w-8 text-sidebar-muted hover:text-sidebar-foreground relative ml-auto">
+                    <Bell className="h-4 w-4" />
+                    <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-red-500 text-[10px] font-bold text-white flex items-center justify-center">
+                      3
+                    </span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="top"><p>Notifications</p></TooltipContent>
+              </Tooltip>
+            </div>
+          )}
+
+          {/* User Profile Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className={cn(
+                "w-full flex items-center gap-3 p-2 rounded-lg hover:bg-sidebar-accent transition-colors group",
+                isCollapsed && "justify-center"
+              )}>
+                <Avatar className={cn(
+                  "border-2 border-sidebar-border",
+                  isCollapsed ? "h-8 w-8" : "h-9 w-9"
+                )}>
+                  <AvatarImage src="/avatars/user.png" alt="User" />
+                  <AvatarFallback className="bg-gradient-to-br from-brand-blue-500 to-brand-green-500 text-white text-sm font-medium">
+                    JD
+                  </AvatarFallback>
+                </Avatar>
+                {!isCollapsed && (
+                  <>
+                    <div className="flex-1 text-left min-w-0">
+                      <p className="text-sm font-medium text-sidebar-foreground truncate">John Dispatcher</p>
+                      <p className="text-xs text-sidebar-muted truncate">Admin</p>
+                    </div>
+                    <ChevronDown className="h-4 w-4 text-sidebar-muted group-hover:text-sidebar-foreground transition-colors" />
+                  </>
+                )}
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align={isCollapsed ? "center" : "end"} side={isCollapsed ? "right" : "top"} className="w-56">
+              <DropdownMenuLabel className="font-normal">
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium">John Dispatcher</p>
+                  <p className="text-xs text-muted-foreground">john@focusfreight.com</p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Settings className="mr-2 h-4 w-4" />
+                Account Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Bell className="mr-2 h-4 w-4" />
+                Notification Preferences
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Mail className="mr-2 h-4 w-4" />
+                Email Settings
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="text-red-600 focus:text-red-600">
+                <LogOut className="mr-2 h-4 w-4" />
+                Sign Out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </SidebarFooter>
-      </div>
-    </div>
+      </TooltipProvider>
+    </Sidebar>
   )
 }
