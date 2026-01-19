@@ -155,7 +155,7 @@ export default function DashboardPage() {
               Today
             </Button>
             <Link href="/loads/new">
-              <Button size="sm" className="bg-brand-600 hover:bg-brand-700">
+              <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
                 <Package className="w-4 h-4 mr-2" />
                 New Load
               </Button>

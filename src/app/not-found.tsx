@@ -34,7 +34,7 @@ export default function NotFound() {
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <Button asChild className="bg-brand-600 hover:bg-brand-700 w-full sm:w-auto">
+          <Button asChild className="bg-green-600 hover:bg-green-700 text-white w-full sm:w-auto">
             <Link href="/dashboard">
               <Home className="w-4 h-4 mr-2" />
               Back to Dashboard

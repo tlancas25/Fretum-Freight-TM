@@ -425,7 +425,7 @@ function IntegrationCard({
               Configure
             </Button>
           ) : (
-            <Button className="w-full bg-brand-600 hover:bg-brand-700" onClick={onConnect}>
+            <Button className="w-full bg-green-600 hover:bg-green-700 text-white" onClick={onConnect}>
               <Zap className="w-4 h-4 mr-2" />
               Connect
             </Button>
@@ -747,7 +747,7 @@ export default function IntegrationsPage() {
             <Button variant="outline" onClick={() => setConnectDialogOpen(false)}>
               Cancel
             </Button>
-            <Button className="bg-brand-600 hover:bg-brand-700" onClick={handleConnectSubmit}>
+            <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={handleConnectSubmit}>
               <Link2 className="w-4 h-4 mr-2" />
               Connect Integration
             </Button>

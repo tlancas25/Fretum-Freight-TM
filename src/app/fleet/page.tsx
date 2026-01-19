@@ -677,7 +677,7 @@ export default function FleetPage() {
                     <SelectItem value="sleeper">Sleeper</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button className="bg-brand-600 hover:bg-brand-700" onClick={() => setAddDriverOpen(true)}>
+                <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={() => setAddDriverOpen(true)}>
                   <Plus className="w-4 h-4 mr-2" />
                   Add Driver
                 </Button>
@@ -703,7 +703,7 @@ export default function FleetPage() {
                     <SelectItem value="out-of-service">Out of Service</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button className="bg-brand-600 hover:bg-brand-700" onClick={() => setAddTruckOpen(true)}>
+                <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={() => setAddTruckOpen(true)}>
                   <Plus className="w-4 h-4 mr-2" />
                   Add Truck
                 </Button>
@@ -729,7 +729,7 @@ export default function FleetPage() {
                     <SelectItem value="maintenance">Maintenance</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button className="bg-brand-600 hover:bg-brand-700">
+                <Button className="bg-green-600 hover:bg-green-700 text-white">
                   <Plus className="w-4 h-4 mr-2" />
                   Add Trailer
                 </Button>
@@ -836,7 +836,7 @@ export default function FleetPage() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setAddDriverOpen(false)}>Cancel</Button>
-            <Button className="bg-brand-600 hover:bg-brand-700" onClick={() => {
+            <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={() => {
               setAddDriverOpen(false);
               toast({ title: "Driver Added", description: "New driver has been added successfully." });
             }}>
@@ -898,7 +898,7 @@ export default function FleetPage() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setAddTruckOpen(false)}>Cancel</Button>
-            <Button className="bg-brand-600 hover:bg-brand-700" onClick={() => {
+            <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={() => {
               setAddTruckOpen(false);
               toast({ title: "Truck Added", description: "New truck has been added successfully." });
             }}>

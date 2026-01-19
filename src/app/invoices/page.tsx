@@ -314,7 +314,7 @@ export default function InvoicesPage() {
               <Download className="w-4 h-4 mr-2" />
               Export
             </Button>
-            <Button className="bg-brand-600 hover:bg-brand-700" onClick={() => setCreateDialogOpen(true)}>
+            <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={() => setCreateDialogOpen(true)}>
               <Plus className="w-4 h-4 mr-2" />
               Create Invoice
             </Button>
@@ -806,7 +806,7 @@ export default function InvoicesPage() {
               <FileText className="w-4 h-4 mr-2" />
               Save as Draft
             </Button>
-            <Button className="bg-brand-600 hover:bg-brand-700" onClick={handleCreateInvoice}>
+            <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={handleCreateInvoice}>
               <Send className="w-4 h-4 mr-2" />
               Create & Send
             </Button>
@@ -886,7 +886,7 @@ export default function InvoicesPage() {
                   Print
                 </Button>
                 {selectedInvoice.status !== "paid" && (
-                  <Button className="flex-1 bg-brand-600 hover:bg-brand-700">
+                  <Button className="flex-1 bg-green-600 hover:bg-green-700 text-white">
                     <Send className="w-4 h-4 mr-2" />
                     Send
                   </Button>

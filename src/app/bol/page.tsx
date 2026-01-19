@@ -683,7 +683,7 @@ export default function BOLGeneratorPage() {
                   <Eye className="w-4 h-4 mr-2" />
                   Preview
                 </Button>
-                <Button className="bg-brand-600 hover:bg-brand-700" onClick={handleGenerateBOL}>
+                <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={handleGenerateBOL}>
                   <FileText className="w-4 h-4 mr-2" />
                   Generate BOL
                 </Button>
@@ -920,7 +920,7 @@ export default function BOLGeneratorPage() {
               <Printer className="w-4 h-4 mr-2" />
               Print
             </Button>
-            <Button className="bg-brand-600 hover:bg-brand-700" onClick={handleSendBOL}>
+            <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={handleSendBOL}>
               <Send className="w-4 h-4 mr-2" />
               Send BOL
             </Button>

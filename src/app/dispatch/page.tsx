@@ -545,7 +545,7 @@ export default function DispatchPage() {
                 <Maximize2 className="w-4 h-4 mr-2" />
                 Full Screen
               </Button>
-              <Button className="bg-brand-600 hover:bg-brand-700" size="sm">
+              <Button className="bg-green-600 hover:bg-green-700 text-white" size="sm">
                 <Plus className="w-4 h-4 mr-2" />
                 New Load
               </Button>
@@ -744,7 +744,7 @@ export default function DispatchPage() {
               Cancel
             </Button>
             <Button 
-              className="bg-brand-600 hover:bg-brand-700" 
+              className="bg-green-600 hover:bg-green-700 text-white" 
               onClick={handleAssignConfirm}
               disabled={!selectedDriverId}
             >

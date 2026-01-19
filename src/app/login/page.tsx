@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Chrome, KeyRound, Mail, Truck, Eye, EyeOff, ArrowRight, Shield, Zap, Users } from "lucide-react"
+import { Chrome, KeyRound, Mail, Eye, EyeOff, ArrowRight, Shield, Zap, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -43,8 +43,12 @@ export default function LoginPage() {
         <div className="relative z-10 flex flex-col justify-center px-16 text-white">
           {/* Logo */}
           <div className="flex items-center gap-4 mb-12">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm shadow-lg">
-              <Truck className="h-8 w-8 text-white" />
+            <div className="flex h-16 w-16 items-center justify-center">
+              <img 
+                src="/logo-icon.png" 
+                alt="FocusFreight" 
+                className="h-full w-full object-contain"
+              />
             </div>
             <div>
               <h1 className="text-3xl font-bold tracking-tight">FocusFreight</h1>
@@ -99,8 +103,12 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           {/* Mobile logo */}
           <div className="flex items-center justify-center gap-3 mb-8 lg:hidden">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-brand-600 to-brand-700 shadow-lg">
-              <Truck className="h-6 w-6 text-white" />
+            <div className="flex h-12 w-12 items-center justify-center">
+              <img 
+                src="/logo-icon.png" 
+                alt="FocusFreight" 
+                className="h-full w-full object-contain"
+              />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-slate-900">FocusFreight</h1>
@@ -163,7 +171,7 @@ export default function LoginPage() {
                 </div>
                 <Button 
                   type="submit" 
-                  className="w-full bg-brand-600 hover:bg-brand-700"
+                  className="w-full bg-green-600 hover:bg-green-700 text-white"
                   disabled={isLoading}
                 >
                   {isLoading ? (

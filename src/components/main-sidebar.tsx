@@ -10,7 +10,6 @@ import {
   FileText,
   Users,
   LogOut,
-  TruckIcon,
   ScanLine,
   Settings,
   Plug,
@@ -175,13 +174,14 @@ export function MainSidebar() {
         )}>
           <Link href="/" className="flex items-center gap-3 font-semibold group">
             <div className={cn(
-              "flex items-center justify-center rounded-xl bg-gradient-to-br from-brand-blue-500 to-brand-blue-600 shadow-lg shadow-brand-blue-500/25 group-hover:shadow-brand-blue-500/40 transition-shadow",
+              "flex items-center justify-center transition-transform group-hover:scale-105",
               isCollapsed ? "h-8 w-8" : "h-10 w-10"
             )}>
-              <TruckIcon className={cn(
-                "text-white",
-                isCollapsed ? "h-4 w-4" : "h-5 w-5"
-              )} />
+              <img 
+                src="/logo-icon.png" 
+                alt="FocusFreight" 
+                className="h-full w-full object-contain"
+              />
             </div>
             {!isCollapsed && (
               <div className="flex flex-col">
