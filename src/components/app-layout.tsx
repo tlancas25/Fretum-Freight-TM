@@ -15,7 +15,7 @@ function Header() {
     const isCollapsed = state === "collapsed";
     
     return (
-        <header className="flex h-14 items-center gap-4 border-b bg-white px-4 lg:h-[60px] lg:px-6 sticky top-0 z-20">
+        <header className="flex h-14 items-center gap-4 border-b bg-white/95 backdrop-blur-sm px-4 lg:h-[60px] lg:px-6 sticky top-0 z-20 shadow-sm">
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger asChild>
@@ -76,7 +76,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
       <MainSidebar />
       <SidebarInset className="flex flex-col min-h-screen">
         <Header />
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1 overflow-auto bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
           {children}
         </main>
       </SidebarInset>

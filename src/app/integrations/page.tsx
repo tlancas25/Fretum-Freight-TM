@@ -191,6 +191,17 @@ const integrations = [
     status: "available",
     features: ["Multi-modal tracking", "Predictive ETAs", "Exception alerts", "Analytics"],
   },
+  {
+    id: "google-maps",
+    name: "Google Maps Platform",
+    description: "Interactive maps, route visualization, and distance calculations for fleet tracking.",
+    category: "tracking",
+    icon: MapPin,
+    status: "available",
+    popular: true,
+    features: ["Interactive fleet maps", "Route visualization", "Distance & ETA calculations", "Traffic data"],
+    apiKeyRequired: true,
+  },
   // Payment & Billing
   {
     id: "quickbooks",
@@ -324,16 +335,16 @@ function IntegrationCard({
   const isConnected = integration.status === "connected";
 
   return (
-    <Card className={`relative transition-all duration-200 hover:shadow-md ${isConnected ? "border-green-200 bg-green-50/30" : ""}`}>
+    <Card className={`relative card-interactive ${isConnected ? "border-green-200 bg-gradient-to-br from-green-50/50 to-white shadow-green-100/50" : "bg-gradient-to-br from-white to-slate-50/50"}`}>
       {integration.popular && (
         <div className="absolute -top-2 -right-2">
-          <Badge className="bg-blue-600 text-white text-[10px] px-1.5 py-0.5">Popular</Badge>
+          <Badge className="bg-blue-600 text-white text-[10px] px-1.5 py-0.5 shadow-md">Popular</Badge>
         </div>
       )}
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className={`p-2 rounded-lg ${isConnected ? "bg-green-100" : "bg-slate-100"}`}>
+            <div className={`p-2.5 rounded-xl shadow-sm ${isConnected ? "bg-green-100" : "bg-slate-100"}`}>
               <Icon className={`w-5 h-5 ${isConnected ? "text-green-600" : "text-slate-600"}`} />
             </div>
             <div>
@@ -477,11 +488,13 @@ export default function IntegrationsPage() {
     <AppLayout>
       <div className="flex flex-col h-full">
         {/* Header */}
-        <div className="flex-shrink-0 border-b bg-white p-4">
+        <div className="flex-shrink-0 border-b bg-gradient-to-r from-white via-white to-blue-50/50 p-4 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                <Plug className="w-6 h-6 text-brand-600" />
+                <div className="p-2 bg-brand-blue-100 rounded-xl">
+                  <Plug className="w-5 h-5 text-brand-600" />
+                </div>
                 Integration Hub
               </h1>
               <p className="text-muted-foreground text-sm mt-1">
@@ -489,11 +502,11 @@ export default function IntegrationsPage() {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="shadow-sm">
                 <Key className="w-4 h-4 mr-2" />
                 API Keys
               </Button>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="shadow-sm">
                 <Activity className="w-4 h-4 mr-2" />
                 Activity Log
               </Button>
@@ -502,9 +515,9 @@ export default function IntegrationsPage() {
 
           {/* Stats */}
           <div className="grid grid-cols-4 gap-4 mb-4">
-            <Card className="p-3">
+            <Card className="p-3 stat-card border-slate-200/60">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-green-100 rounded-lg">
+                <div className="p-2.5 bg-green-100 rounded-xl shadow-sm">
                   <CheckCircle2 className="w-5 h-5 text-green-600" />
                 </div>
                 <div>
@@ -513,9 +526,9 @@ export default function IntegrationsPage() {
                 </div>
               </div>
             </Card>
-            <Card className="p-3">
+            <Card className="p-3 stat-card border-slate-200/60">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
+                <div className="p-2.5 bg-blue-100 rounded-xl shadow-sm">
                   <Plug className="w-5 h-5 text-blue-600" />
                 </div>
                 <div>
@@ -524,9 +537,9 @@ export default function IntegrationsPage() {
                 </div>
               </div>
             </Card>
-            <Card className="p-3">
+            <Card className="p-3 stat-card border-slate-200/60">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-purple-100 rounded-lg">
+                <div className="p-2.5 bg-purple-100 rounded-xl shadow-sm">
                   <RefreshCw className="w-5 h-5 text-purple-600" />
                 </div>
                 <div>
@@ -535,9 +548,9 @@ export default function IntegrationsPage() {
                 </div>
               </div>
             </Card>
-            <Card className="p-3">
+            <Card className="p-3 stat-card border-slate-200/60">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-emerald-100 rounded-lg">
+                <div className="p-2.5 bg-emerald-100 rounded-xl shadow-sm">
                   <Shield className="w-5 h-5 text-emerald-600" />
                 </div>
                 <div>
@@ -644,18 +657,73 @@ export default function IntegrationsPage() {
               Connect {selectedIntegration?.name}
             </DialogTitle>
             <DialogDescription>
-              Enter your credentials to connect this integration to FocusFreight TMS.
+              {selectedIntegration?.id === 'google-maps' 
+                ? "Enter your Google Maps Platform API key to enable interactive maps and route visualization."
+                : "Enter your credentials to connect this integration to FocusFreight TMS."}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="api-key">API Key</Label>
-              <Input id="api-key" type="password" placeholder="Enter your API key" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="api-secret">API Secret (if required)</Label>
-              <Input id="api-secret" type="password" placeholder="Enter your API secret" />
-            </div>
+            {/* Google Maps specific fields */}
+            {selectedIntegration?.id === 'google-maps' ? (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="api-key">Google Maps API Key</Label>
+                  <Input id="api-key" type="password" placeholder="AIza..." />
+                  <p className="text-xs text-muted-foreground">
+                    Get your API key from the <a href="https://console.cloud.google.com/google/maps-apis" target="_blank" rel="noopener noreferrer" className="text-brand-600 hover:underline">Google Cloud Console</a>
+                  </p>
+                </div>
+                <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                  <h4 className="font-medium text-sm text-blue-800 mb-2">Required APIs</h4>
+                  <ul className="text-xs text-blue-700 space-y-1">
+                    <li>• Maps JavaScript API</li>
+                    <li>• Directions API</li>
+                    <li>• Geocoding API</li>
+                    <li>• Distance Matrix API (optional)</li>
+                  </ul>
+                </div>
+              </>
+            ) : selectedIntegration?.id === 'samsara' || selectedIntegration?.id === 'keeptruckin' || selectedIntegration?.id === 'geotab' ? (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="api-key">API Token</Label>
+                  <Input id="api-key" type="password" placeholder="Enter your API token" />
+                </div>
+                {selectedIntegration?.id === 'geotab' && (
+                  <>
+                    <div className="space-y-2">
+                      <Label htmlFor="database">Database Name</Label>
+                      <Input id="database" placeholder="Your Geotab database name" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="username">Username</Label>
+                      <Input id="username" placeholder="Your Geotab username" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="password">Password</Label>
+                      <Input id="password" type="password" placeholder="Your Geotab password" />
+                    </div>
+                  </>
+                )}
+                <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                  <h4 className="font-medium text-sm text-amber-800 mb-1">ELD Integration</h4>
+                  <p className="text-xs text-amber-700">
+                    This integration will sync HOS logs, vehicle locations, and driver data.
+                  </p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="api-key">API Key</Label>
+                  <Input id="api-key" type="password" placeholder="Enter your API key" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="api-secret">API Secret (if required)</Label>
+                  <Input id="api-secret" type="password" placeholder="Enter your API secret" />
+                </div>
+              </>
+            )}
             <div className="space-y-2">
               <Label htmlFor="webhook-url">Webhook URL (optional)</Label>
               <Input id="webhook-url" placeholder="https://your-webhook-url.com" />

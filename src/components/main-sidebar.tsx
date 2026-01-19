@@ -24,12 +24,14 @@ import {
   ChevronRight,
   Wallet,
   MapPin,
-  Clock,
   Shield,
   Headphones,
   BookOpen,
   MessageSquare,
-  Mail
+  Mail,
+  Fuel,
+  Receipt,
+  Calculator
 } from "lucide-react"
 import {
   Sidebar,
@@ -84,6 +86,9 @@ const operationsMenuItems: MenuItem[] = [
   { href: "/loads/extract", label: "Document AI", icon: ScanLine },
   { href: "/bol", label: "BOL Generator", icon: FileText },
   { href: "/invoices", label: "Invoicing", icon: FileText, badge: 5 },
+  { href: "/settlements", label: "Driver Settlements", icon: Wallet },
+  { href: "/expenses", label: "Expenses", icon: Receipt },
+  { href: "/ifta", label: "IFTA Reporting", icon: Fuel },
   { href: "/fleet", label: "Fleet Management", icon: Users },
   { href: "/tracking", label: "Live Tracking", icon: MapPin },
   { href: "/reports", label: "Analytics", icon: BarChart3 },
@@ -201,7 +206,7 @@ export function MainSidebar() {
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="w-full h-9 gap-2 text-xs font-medium border-sidebar-border hover:bg-sidebar-accent hover:border-sidebar-primary/50"
+                      className="w-full h-9 gap-2 text-xs font-medium bg-sidebar-accent text-sidebar-foreground border-sidebar-border hover:bg-sidebar-primary hover:text-sidebar-primary-foreground hover:border-sidebar-primary"
                     >
                       <Plus className="h-3.5 w-3.5" />
                       New Load
@@ -218,7 +223,7 @@ export function MainSidebar() {
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="w-full h-9 gap-2 text-xs font-medium border-sidebar-border hover:bg-sidebar-accent hover:border-sidebar-primary/50"
+                      className="w-full h-9 gap-2 text-xs font-medium bg-sidebar-accent text-sidebar-foreground border-sidebar-border hover:bg-sidebar-primary hover:text-sidebar-primary-foreground hover:border-sidebar-primary"
                     >
                       <FileText className="h-3.5 w-3.5" />
                       Quick Quote
@@ -256,7 +261,7 @@ export function MainSidebar() {
         )}
         
         {/* Main Navigation */}
-        <SidebarContent className="flex-1 overflow-y-auto">
+        <SidebarContent className="flex-1 overflow-y-auto sidebar-scroll">
           <SidebarGroup>
             {!isCollapsed && (
               <SidebarGroupLabel className="px-3 text-xs font-semibold uppercase tracking-wider text-sidebar-muted">
@@ -296,40 +301,6 @@ export function MainSidebar() {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
-
-        {/* Live Status Indicator */}
-        {!isCollapsed && (
-          <div className="px-4 py-3 border-t border-sidebar-border">
-            <div className="flex items-center gap-3 p-2 rounded-lg bg-sidebar-accent/50">
-              <div className="relative">
-                <div className="w-2 h-2 rounded-full bg-brand-green-500" />
-                <div className="absolute inset-0 w-2 h-2 rounded-full bg-brand-green-500 animate-ping" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-sidebar-foreground">System Online</p>
-                <p className="text-[10px] text-sidebar-muted">All services operational</p>
-              </div>
-              <Clock className="h-3.5 w-3.5 text-sidebar-muted" />
-            </div>
-          </div>
-        )}
-
-        {/* Collapsed Status */}
-        {isCollapsed && (
-          <div className="py-2 border-t border-sidebar-border flex justify-center">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="relative p-2">
-                  <div className="w-2 h-2 rounded-full bg-brand-green-500" />
-                  <div className="absolute inset-0 m-2 w-2 h-2 rounded-full bg-brand-green-500 animate-ping" />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent side="right">
-                <p>System Online</p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        )}
         
         {/* Footer with User Profile */}
         <SidebarFooter className="border-t border-sidebar-border p-2">

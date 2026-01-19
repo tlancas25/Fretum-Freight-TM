@@ -44,6 +44,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { FleetMap, VehicleMarker } from "@/lib/maps";
 
 // Sample live tracking data
 const activeVehicles = [
@@ -446,22 +447,26 @@ export default function TrackingPage() {
           </div>
 
           {/* Map Area */}
-          <div className="flex-1 relative bg-slate-200">
-            {/* Map Placeholder */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg mb-4 mx-auto">
-                  <MapPin className="w-12 h-12 text-brand-600" />
-                </div>
-                <h3 className="text-lg font-semibold text-slate-700">Map Integration</h3>
-                <p className="text-sm text-muted-foreground max-w-xs mx-auto mt-2">
-                  Connect your Google Maps, Mapbox, or HERE Maps API to enable live GPS tracking visualization.
-                </p>
-                <Button className="mt-4 bg-brand-600 hover:bg-brand-700">
-                  Configure Map Provider
-                </Button>
-              </div>
-            </div>
+          <div className="flex-1 relative">
+            {/* Fleet Map with Google Maps Integration */}
+            <FleetMap
+              vehicles={filteredVehicles.map((v): VehicleMarker => ({
+                id: v.id,
+                name: v.id,
+                lat: v.coordinates.lat,
+                lng: v.coordinates.lng,
+                heading: v.heading === "N" ? 0 : v.heading === "E" ? 90 : v.heading === "S" ? 180 : v.heading === "W" ? 270 : v.heading === "NE" ? 45 : v.heading === "SE" ? 135 : v.heading === "SW" ? 225 : 315,
+                speed: v.speed,
+                status: v.status === "moving" ? "driving" : v.status === "delayed" ? "idle" : v.status === "at-pickup" || v.status === "at-delivery" ? "stopped" : "stopped",
+                driver: v.driver.name,
+                lastUpdate: new Date(),
+                loadId: v.loadId,
+              }))}
+              selectedVehicle={selectedVehicle}
+              onVehicleClick={(id) => setSelectedVehicle(id)}
+              showTraffic={true}
+              height="100%"
+            />
 
             {/* Selected Vehicle Info Overlay */}
             {selectedVehicleData && (

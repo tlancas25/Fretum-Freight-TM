@@ -786,6 +786,58 @@ export default function NewLoadPage() {
                           <span>${rpm}/mi</span>
                         </div>
                       </div>
+                      
+                      {/* Profitability Calculator */}
+                      <Separator className="my-4" />
+                      <h4 className="font-medium text-slate-900 mb-3">Profitability Analysis</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between text-slate-600">
+                          <span>Est. Fuel Cost ({formData.miles ? Math.ceil(parseFloat(formData.miles) / 6.5) : 0} gal @ $3.50)</span>
+                          <span className="text-red-500">-${formData.miles ? (Math.ceil(parseFloat(formData.miles) / 6.5) * 3.50).toFixed(2) : '0.00'}</span>
+                        </div>
+                        <div className="flex justify-between text-slate-600">
+                          <span>Est. Driver Pay (28%)</span>
+                          <span className="text-red-500">-${(totalRate * 0.28).toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between text-slate-600">
+                          <span>Est. Operating Costs ($0.25/mi)</span>
+                          <span className="text-red-500">-${formData.miles ? (parseFloat(formData.miles) * 0.25).toFixed(2) : '0.00'}</span>
+                        </div>
+                        <Separator className="my-2" />
+                        {(() => {
+                          const fuelCost = formData.miles ? Math.ceil(parseFloat(formData.miles) / 6.5) * 3.50 : 0;
+                          const driverPay = totalRate * 0.28;
+                          const opCosts = formData.miles ? parseFloat(formData.miles) * 0.25 : 0;
+                          const profit = totalRate - fuelCost - driverPay - opCosts;
+                          const margin = totalRate > 0 ? (profit / totalRate) * 100 : 0;
+                          return (
+                            <>
+                              <div className="flex justify-between font-bold text-base">
+                                <span>Est. Profit</span>
+                                <span className={profit >= 0 ? "text-green-600" : "text-red-600"}>
+                                  ${profit.toFixed(2)}
+                                </span>
+                              </div>
+                              <div className="flex justify-between text-xs">
+                                <span className="text-slate-500">Profit Margin</span>
+                                <span className={margin >= 20 ? "text-green-600 font-medium" : margin >= 10 ? "text-amber-600 font-medium" : "text-red-600 font-medium"}>
+                                  {margin.toFixed(1)}%
+                                </span>
+                              </div>
+                              {margin < 15 && (
+                                <div className="mt-2 p-2 bg-amber-50 border border-amber-200 rounded text-xs text-amber-700">
+                                  ⚠️ Low margin - consider negotiating rate or optimizing route
+                                </div>
+                              )}
+                              {margin >= 25 && (
+                                <div className="mt-2 p-2 bg-green-50 border border-green-200 rounded text-xs text-green-700">
+                                  ✓ Good profit margin for this load
+                                </div>
+                              )}
+                            </>
+                          );
+                        })()}
+                      </div>
                     </div>
                   </div>
 

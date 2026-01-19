@@ -47,9 +47,11 @@ import {
   Gauge,
   MoreHorizontal,
   ExternalLink,
-  Send
+  Send,
+  Map
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { LoadRouteMap } from '@/lib/maps';
 
 // Mock load data
 const loadData = {
@@ -66,6 +68,8 @@ const loadData = {
     city: 'Newark',
     state: 'NJ',
     zip: '07102',
+    lat: 40.7357,
+    lng: -74.1724,
     contact: 'John Smith',
     phone: '(973) 555-1234',
     email: 'dispatch@amazon.com',
@@ -84,6 +88,8 @@ const loadData = {
     city: 'Charlotte',
     state: 'NC',
     zip: '28202',
+    lat: 35.2271,
+    lng: -80.8431,
     contact: 'Mary Johnson',
     phone: '(704) 555-9876',
     email: 'receiving@target.com',
@@ -92,6 +98,13 @@ const loadData = {
     eta: '14:20',
     reference: 'DEL-99012',
     instructions: 'Receiving dock 7. Must have lumper receipt.',
+  },
+
+  // Current truck location (for in-transit loads)
+  truckLocation: {
+    lat: 35.7596,
+    lng: -79.0193,
+    heading: 225, // Heading southwest towards Charlotte
   },
   
   // Cargo
@@ -327,6 +340,38 @@ export default function LoadDetailsPage() {
                   </CardContent>
                 </Card>
               )}
+
+              {/* Route Map */}
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <Map className="h-5 w-5 text-slate-500" />
+                    Route Map
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <LoadRouteMap
+                    // apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
+                    pickup={{
+                      lat: loadData.pickup.lat,
+                      lng: loadData.pickup.lng,
+                      address: loadData.pickup.address,
+                      city: loadData.pickup.city,
+                      state: loadData.pickup.state,
+                    }}
+                    delivery={{
+                      lat: loadData.delivery.lat,
+                      lng: loadData.delivery.lng,
+                      address: loadData.delivery.address,
+                      city: loadData.delivery.city,
+                      state: loadData.delivery.state,
+                    }}
+                    currentLocation={loadData.status === 'in-transit' ? loadData.truckLocation : undefined}
+                    height="350px"
+                    className="rounded-b-lg"
+                  />
+                </CardContent>
+              </Card>
 
               {/* Route Details */}
               <div className="grid md:grid-cols-2 gap-4">

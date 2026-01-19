@@ -200,6 +200,31 @@
 }
 
 @layer utilities {
+  /* Enhanced card shadow for more depth */
+  .card-elevated {
+    @apply shadow-lg shadow-slate-200/50 border-slate-200/80;
+  }
+
+  /* Stat card with subtle gradient */
+  .stat-card {
+    @apply bg-gradient-to-br from-white to-slate-50/80 shadow-md hover:shadow-lg transition-all duration-200;
+  }
+
+  /* Section header with visual weight */
+  .section-header {
+    @apply bg-gradient-to-r from-slate-100 to-transparent px-4 py-3 rounded-lg;
+  }
+
+  /* Content panel with depth */
+  .content-panel {
+    @apply bg-white rounded-xl shadow-sm border border-slate-200/60 p-6;
+  }
+
+  /* Interactive card hover effect */
+  .card-interactive {
+    @apply hover:shadow-lg hover:-translate-y-0.5 hover:border-brand-blue-200 transition-all duration-200 cursor-pointer;
+  }
+
   /* Text utilities */
   .text-balance {
     text-wrap: balance;
@@ -213,6 +238,29 @@
   
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Custom sidebar scrollbar */
+  .sidebar-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--sidebar-border)) transparent;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar-thumb {
+    background: hsl(var(--sidebar-border));
+    border-radius: 3px;
+  }
+
+  .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--sidebar-muted));
   }
   
   /* Focus ring utility */

@@ -108,12 +108,12 @@ interface StatCardProps {
 
 function StatCard({ title, value, change, changeType, icon: Icon, iconBgColor, iconColor }: StatCardProps) {
   return (
-    <Card className="card-hover">
+    <Card className="stat-card border-slate-200/60">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium text-muted-foreground">
           {title}
         </CardTitle>
-        <div className={cn("p-2 rounded-lg", iconBgColor)}>
+        <div className={cn("p-2.5 rounded-xl shadow-sm", iconBgColor)}>
           <Icon className={cn("h-4 w-4", iconColor)} />
         </div>
       </CardHeader>
