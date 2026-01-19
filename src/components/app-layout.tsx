@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react';
 import { SidebarProvider, Sidebar, SidebarInset, SidebarTrigger, useSidebar } from '@/components/ui/sidebar';
 import { MainSidebar } from '@/components/main-sidebar';
+import { MobileBottomNav } from '@/components/mobile-bottom-nav';
 import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { CircleUser, Search, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -76,10 +77,11 @@ export function AppLayout({ children }: { children: ReactNode }) {
       <MainSidebar />
       <SidebarInset className="flex flex-col min-h-screen">
         <Header />
-        <main className="flex-1 overflow-auto bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
+        <main className="flex-1 overflow-auto bg-gradient-to-br from-slate-50 via-white to-blue-50/30 pb-20 md:pb-0">
           {children}
         </main>
       </SidebarInset>
+      <MobileBottomNav />
     </SidebarProvider>
   );
 }

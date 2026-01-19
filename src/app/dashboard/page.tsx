@@ -378,25 +378,25 @@ export default function DashboardPage() {
           {/* Right Column - Sidebar Widgets */}
           <div className="space-y-4">
             {/* Quick Stats */}
-            <Card className="bg-gradient-to-br from-brand-600 to-brand-700 text-white">
+            <Card className="bg-gradient-to-br from-brand-600 to-brand-700 text-white border-0">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="p-2 bg-white/20 rounded-lg">
-                    <Zap className="w-5 h-5" />
+                    <Zap className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-sm opacity-90">Today's Performance</p>
-                    <p className="text-2xl font-bold">$12,450</p>
+                    <p className="text-sm text-white/90">Today's Performance</p>
+                    <p className="text-2xl font-bold text-white">$12,450</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="p-2 bg-white/10 rounded-lg">
-                    <p className="text-lg font-bold">8</p>
-                    <p className="text-xs opacity-80">Loads Delivered</p>
+                  <div className="p-2 bg-white/15 rounded-lg">
+                    <p className="text-lg font-bold text-white">8</p>
+                    <p className="text-xs text-white/80">Loads Delivered</p>
                   </div>
-                  <div className="p-2 bg-white/10 rounded-lg">
-                    <p className="text-lg font-bold">2,340</p>
-                    <p className="text-xs opacity-80">Miles Covered</p>
+                  <div className="p-2 bg-white/15 rounded-lg">
+                    <p className="text-lg font-bold text-white">2,340</p>
+                    <p className="text-xs text-white/80">Miles Covered</p>
                   </div>
                 </div>
               </CardContent>

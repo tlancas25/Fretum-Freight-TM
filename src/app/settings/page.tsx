@@ -913,10 +913,10 @@ export default function SettingsPage() {
                       <div className="p-4 bg-gradient-to-r from-brand-600 to-brand-700 rounded-lg text-white">
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="text-sm opacity-90">Your plan includes</p>
-                            <p className="text-2xl font-bold mt-1">Unlimited Users & Loads</p>
+                            <p className="text-sm text-white/90">Your plan includes</p>
+                            <p className="text-2xl font-bold mt-1 text-white">Unlimited Users & Loads</p>
                           </div>
-                          <CheckCircle2 className="w-10 h-10 opacity-80" />
+                          <CheckCircle2 className="w-10 h-10 text-white/80" />
                         </div>
                       </div>
                       <div className="grid grid-cols-3 gap-4 text-center">

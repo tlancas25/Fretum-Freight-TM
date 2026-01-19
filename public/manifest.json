@@ -1,0 +1,48 @@
+{
+  "name": "FocusFreight TMS",
+  "short_name": "FocusFreight",
+  "description": "Enterprise Transportation Management System",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#1E3A5F",
+  "theme_color": "#0066CC",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "shortcuts": [
+    {
+      "name": "New Load",
+      "short_name": "New Load",
+      "description": "Create a new load",
+      "url": "/loads/new",
+      "icons": [{ "src": "/logo-icon.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Dispatch Board",
+      "short_name": "Dispatch",
+      "description": "View dispatch board",
+      "url": "/dispatch",
+      "icons": [{ "src": "/logo-icon.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Live Tracking",
+      "short_name": "Tracking",
+      "description": "Track fleet in real-time",
+      "url": "/tracking",
+      "icons": [{ "src": "/logo-icon.png", "sizes": "96x96" }]
+    }
+  ]
+}

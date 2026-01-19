@@ -76,6 +76,18 @@ const config: Config = {
         },
         // FocusFreight Brand Colors
         brand: {
+          // Direct brand colors (defaults to blue palette)
+          50: '#EFF6FF',
+          100: '#DBEAFE',
+          200: '#BFDBFE',
+          300: '#93C5FD',
+          400: '#60A5FA',
+          500: '#3B82F6',
+          600: '#0066CC',
+          700: '#1D4ED8',
+          800: '#1E3A5F',
+          900: '#1E3A8A',
+          // Explicit blue palette
           blue: {
             50: '#EFF6FF',
             100: '#DBEAFE',
@@ -88,6 +100,7 @@ const config: Config = {
             800: '#1E3A5F',
             900: '#1E3A8A',
           },
+          // Explicit green palette
           green: {
             50: '#ECFDF5',
             100: '#D1FAE5',
