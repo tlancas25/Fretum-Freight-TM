@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from "@/contexts/auth-context"
 import { TenantProvider } from "@/contexts/tenant-context"
+import { FeatureAccessProvider } from "@/lib/features/hooks"
 
 export const metadata: Metadata = {
   title: 'Fretum-Freight TMS | Enterprise Transportation Management',
@@ -51,7 +52,9 @@ export default function RootLayout({
       <body className="font-body antialiased touch-manipulation">
         <AuthProvider>
           <TenantProvider>
-            {children}
+            <FeatureAccessProvider initialTier="starter">
+              {children}
+            </FeatureAccessProvider>
           </TenantProvider>
         </AuthProvider>
         <Toaster />

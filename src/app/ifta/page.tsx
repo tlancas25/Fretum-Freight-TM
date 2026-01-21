@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
+import { FeatureGate } from "@/lib/features/components";
 import {
   Dialog,
   DialogContent,
@@ -243,6 +244,7 @@ export default function IFTAPage() {
 
   return (
     <AppLayout>
+      <FeatureGate feature="ifta_reporting">
       <div className="flex flex-col h-full bg-slate-50">
         {/* Header */}
         <header className="bg-white border-b border-slate-200 px-6 py-4 flex-shrink-0">
@@ -764,6 +766,7 @@ export default function IFTAPage() {
           )}
         </main>
       </div>
+      </FeatureGate>
     </AppLayout>
   );
 }

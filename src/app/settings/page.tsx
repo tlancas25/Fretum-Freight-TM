@@ -15,6 +15,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useFeatureAccess } from "@/lib/features/hooks";
+import { TIER_INFO, TIER_FEATURES, Feature, SubscriptionTier, FEATURE_CATALOG, getTierFeaturesByCategory } from "@/lib/features";
 import {
   Settings,
   Building2,
@@ -48,6 +50,8 @@ import {
   Moon,
   Monitor,
   X,
+  Sparkles,
+  Star,
 } from "lucide-react";
 import {
   Dialog,
@@ -1097,52 +1101,7 @@ export default function SettingsPage() {
 
               {/* Billing */}
               {activeTab === "billing" && (
-                <div className="max-w-3xl space-y-6">
-                  <div>
-                    <h2 className="text-lg font-semibold">Billing & Plans</h2>
-                    <p className="text-sm text-muted-foreground">Manage your subscription and billing</p>
-                  </div>
-
-                  <Card>
-                    <CardHeader>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <CardTitle className="text-base">Current Plan</CardTitle>
-                          <CardDescription>Enterprise - Full Access</CardDescription>
-                        </div>
-                        <Badge className="bg-brand-100 text-brand-700">Active</Badge>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="p-4 bg-gradient-to-r from-brand-600 to-brand-700 rounded-lg text-white">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="text-sm text-white/90">Your plan includes</p>
-                            <p className="text-2xl font-bold mt-1 text-white">Unlimited Users & Loads</p>
-                          </div>
-                          <CheckCircle2 className="w-10 h-10 text-white/80" />
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-3 gap-4 text-center">
-                        <div className="p-3 bg-slate-50 rounded-lg">
-                          <p className="text-2xl font-bold text-brand-600">∞</p>
-                          <p className="text-xs text-muted-foreground">Active Loads</p>
-                        </div>
-                        <div className="p-3 bg-slate-50 rounded-lg">
-                          <p className="text-2xl font-bold text-brand-600">∞</p>
-                          <p className="text-xs text-muted-foreground">Team Members</p>
-                        </div>
-                        <div className="p-3 bg-slate-50 rounded-lg">
-                          <p className="text-2xl font-bold text-brand-600">∞</p>
-                          <p className="text-xs text-muted-foreground">Integrations</p>
-                        </div>
-                      </div>
-                      <p className="text-center text-sm text-muted-foreground">
-                        You have full access to all Fretum-Freight features. No limitations.
-                      </p>
-                    </CardContent>
-                  </Card>
-                </div>
+                <BillingSection />
               )}
 
               {/* Team */}
@@ -1206,5 +1165,245 @@ export default function SettingsPage() {
         </div>
       </div>
     </AppLayout>
+  );
+}
+
+// Billing Section Component with Tier Management
+function BillingSection() {
+  const { tier, tierInfo, setTier, availableFeatures, can } = useFeatureAccess();
+  const { toast } = useToast();
+  const allTiers: SubscriptionTier[] = ['trial', 'starter', 'professional', 'enterprise'];
+  
+  // Key features to highlight for each tier
+  const tierHighlights: Record<SubscriptionTier, string[]> = {
+    trial: ['Dashboard', 'Load Management', 'Basic Dispatch', 'BOL Generation'],
+    starter: ['ELD Integrations (Samsara, Motive, Geotab)', 'IFTA Reporting', 'Fuel Tax Reports', 'Expense Tracking', 'Document Management'],
+    professional: ['Live GPS Tracking', 'QuickBooks Integration', 'Advanced Reports', 'AI Load Extraction', 'HOS Compliance'],
+    enterprise: ['Unlimited Everything', 'API Access', 'Custom Branding', 'Route Optimization', 'Priority Support'],
+  };
+  
+  const handleUpgrade = (newTier: SubscriptionTier) => {
+    setTier(newTier);
+    toast({
+      title: "Plan Updated",
+      description: `Your plan has been changed to ${TIER_INFO[newTier].name}. This is a demo - in production this would process payment.`,
+    });
+  };
+  
+  return (
+    <div className="max-w-5xl space-y-6">
+      <div>
+        <h2 className="text-lg font-semibold">Billing & Plans</h2>
+        <p className="text-sm text-muted-foreground">Manage your subscription and view available features</p>
+      </div>
+
+      {/* Current Plan Card */}
+      <Card className="border-2 border-brand-200 bg-gradient-to-br from-brand-50 to-white">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-brand-100 rounded-lg">
+                <Star className="w-5 h-5 text-brand-600" />
+              </div>
+              <div>
+                <CardTitle className="text-base">Current Plan: {tierInfo.name}</CardTitle>
+                <CardDescription>{tierInfo.description}</CardDescription>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-2xl font-bold text-brand-600">{tierInfo.price}</p>
+              <p className="text-xs text-muted-foreground">{tierInfo.priceNote}</p>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+            <div className="p-3 bg-white rounded-lg border">
+              <p className="text-xl font-bold text-brand-600">
+                {tierInfo.maxUsers === 'unlimited' ? '∞' : tierInfo.maxUsers}
+              </p>
+              <p className="text-xs text-muted-foreground">Max Users</p>
+            </div>
+            <div className="p-3 bg-white rounded-lg border">
+              <p className="text-xl font-bold text-brand-600">
+                {tierInfo.maxLoads === 'unlimited' ? '∞' : tierInfo.maxLoads}
+              </p>
+              <p className="text-xs text-muted-foreground">Max Loads/Month</p>
+            </div>
+            <div className="p-3 bg-white rounded-lg border">
+              <p className="text-xl font-bold text-brand-600">{tierInfo.maxTrucks}</p>
+              <p className="text-xs text-muted-foreground">Fleet Size</p>
+            </div>
+            <div className="p-3 bg-white rounded-lg border">
+              <p className="text-xl font-bold text-brand-600">{availableFeatures.length}</p>
+              <p className="text-xs text-muted-foreground">Features</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Plan Comparison */}
+      <div>
+        <h3 className="text-sm font-semibold mb-4">Compare Plans</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {allTiers.map((planTier) => {
+            const info = TIER_INFO[planTier];
+            const isCurrentPlan = tier === planTier;
+            const features = tierHighlights[planTier];
+            
+            return (
+              <Card 
+                key={planTier} 
+                className={`relative ${isCurrentPlan ? 'border-2 border-brand-500 shadow-lg' : ''} ${info.highlighted ? 'ring-2 ring-amber-400' : ''}`}
+              >
+                {info.highlighted && !isCurrentPlan && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <Badge className="bg-amber-500 text-white">Most Popular</Badge>
+                  </div>
+                )}
+                {isCurrentPlan && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <Badge className="bg-brand-600 text-white">Current Plan</Badge>
+                  </div>
+                )}
+                <CardHeader className="pb-2 pt-6">
+                  <CardTitle className="text-lg">{info.name}</CardTitle>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-2xl font-bold">{info.price}</span>
+                    {info.priceNote && (
+                      <span className="text-xs text-muted-foreground">/{info.priceNote.replace('per ', '')}</span>
+                    )}
+                  </div>
+                  <CardDescription className="text-xs">{info.description}</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="text-xs text-muted-foreground">
+                    <p>Up to {info.maxTrucks} trucks</p>
+                    <p>{info.maxUsers === 'unlimited' ? 'Unlimited' : `Up to ${info.maxUsers}`} users</p>
+                  </div>
+                  <Separator />
+                  <div className="space-y-1.5">
+                    {features.map((feature, idx) => (
+                      <div key={idx} className="flex items-start gap-2 text-xs">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-green-500 mt-0.5 flex-shrink-0" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <Button 
+                    className={`w-full mt-4 ${isCurrentPlan ? 'bg-slate-200 text-slate-600' : 'bg-brand-600 hover:bg-brand-700 text-white'}`}
+                    disabled={isCurrentPlan}
+                    onClick={() => handleUpgrade(planTier)}
+                  >
+                    {isCurrentPlan ? 'Current Plan' : planTier === 'enterprise' ? 'Contact Sales' : 'Select Plan'}
+                  </Button>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Feature Availability by Category */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Your Available Features</CardTitle>
+          <CardDescription>Features included in your {tierInfo.name} plan</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Integrations - Highlight ELD */}
+            <div>
+              <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                <Truck className="w-4 h-4" /> Integrations
+              </h4>
+              <div className="space-y-1">
+                {(['eld_integrations', 'eld_samsara', 'eld_motive', 'eld_geotab', 'quickbooks_integration', 'factoring_integration', 'load_board_integration', 'api_access'] as Feature[]).map((feature) => (
+                  <div key={feature} className="flex items-center gap-2 text-xs">
+                    {can(feature) ? (
+                      <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                    ) : (
+                      <Lock className="w-3.5 h-3.5 text-slate-300" />
+                    )}
+                    <span className={can(feature) ? '' : 'text-slate-400'}>
+                      {FEATURE_CATALOG[feature].name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Compliance - Highlight IFTA */}
+            <div>
+              <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                <FileText className="w-4 h-4" /> Compliance & Reporting
+              </h4>
+              <div className="space-y-1">
+                {(['ifta_reporting', 'fuel_tax_reports', 'bol_generation', 'document_management', 'hos_compliance', 'safety_compliance', 'reports_basic', 'reports_advanced'] as Feature[]).map((feature) => (
+                  <div key={feature} className="flex items-center gap-2 text-xs">
+                    {can(feature) ? (
+                      <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                    ) : (
+                      <Lock className="w-3.5 h-3.5 text-slate-300" />
+                    )}
+                    <span className={can(feature) ? '' : 'text-slate-400'}>
+                      {FEATURE_CATALOG[feature].name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Advanced */}
+            <div>
+              <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
+                <Sparkles className="w-4 h-4" /> Advanced Features
+              </h4>
+              <div className="space-y-1">
+                {(['ai_load_extraction', 'route_optimization', 'predictive_analytics', 'live_tracking', 'multi_location', 'custom_branding', 'unlimited_users', 'unlimited_loads'] as Feature[]).map((feature) => (
+                  <div key={feature} className="flex items-center gap-2 text-xs">
+                    {can(feature) ? (
+                      <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                    ) : (
+                      <Lock className="w-3.5 h-3.5 text-slate-300" />
+                    )}
+                    <span className={can(feature) ? '' : 'text-slate-400'}>
+                      {FEATURE_CATALOG[feature].name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Starter Plan Highlight */}
+      {tier === 'trial' && (
+        <Card className="border-green-200 bg-gradient-to-r from-green-50 to-emerald-50">
+          <CardContent className="py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <Sparkles className="w-5 h-5 text-green-600" />
+                </div>
+                <div>
+                  <p className="font-semibold text-green-800">Upgrade to Starter for just $99/month</p>
+                  <p className="text-sm text-green-600">
+                    Includes <strong>ELD Integrations</strong> (Samsara, Motive, Geotab) and <strong>IFTA Reporting</strong>!
+                  </p>
+                </div>
+              </div>
+              <Button 
+                className="bg-green-600 hover:bg-green-700 text-white"
+                onClick={() => handleUpgrade('starter')}
+              >
+                Upgrade Now
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </div>
   );
 }
