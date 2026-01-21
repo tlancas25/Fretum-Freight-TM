@@ -1,6 +1,7 @@
 import type {Metadata, Viewport} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
+import { AuthProvider } from "@/contexts/auth-context"
 
 export const metadata: Metadata = {
   title: 'Fretum-Freight TMS | Enterprise Transportation Management',
@@ -47,7 +48,9 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
       <body className="font-body antialiased touch-manipulation">
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
         <Toaster />
         <script
           dangerouslySetInnerHTML={{

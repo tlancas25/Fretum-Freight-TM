@@ -124,6 +124,10 @@ export class GeotabProvider extends BaseELDProvider {
     this.sessionId = result.result.credentials.sessionId;
     this.database = result.result.credentials.database;
 
+    if (!this.sessionId) {
+      throw new Error('Geotab authentication failed: No session ID returned');
+    }
+
     const token: AuthToken = {
       accessToken: this.sessionId,
       tokenType: 'Session',

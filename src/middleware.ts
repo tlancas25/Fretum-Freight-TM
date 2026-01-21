@@ -5,7 +5,7 @@ import type { NextRequest } from 'next/server';
  * Security Middleware for Fretum-Freight TMS
  * 
  * This middleware handles:
- * - Route protection (authentication checks)
+ * - Route protection (authentication checks via Firebase session cookies)
  * - Rate limiting headers
  * - Security headers augmentation
  * - Request validation
@@ -13,9 +13,15 @@ import type { NextRequest } from 'next/server';
  * Copyright (c) 2026 Terrell A Lancaster. All Rights Reserved.
  */
 
+// Session cookie name (must match what we set in API route)
+const SESSION_COOKIE_NAME = '__session';
+
 // Routes that don't require authentication
 const PUBLIC_ROUTES = [
   '/login',
+  '/signup',
+  '/forgot-password',
+  '/api/auth',
   '/api/health',
   '/manifest.json',
   '/sw.js',
@@ -36,6 +42,14 @@ const PROTECTED_API_ROUTES = [
   '/api/settings',
 ];
 
+// Check if Firebase is configured (for development mode bypass)
+const isFirebaseConfigured = () => {
+  return !!(
+    process.env.NEXT_PUBLIC_FIREBASE_API_KEY &&
+    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
+  );
+};
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
@@ -55,18 +69,40 @@ export function middleware(request: NextRequest) {
   );
   
   // For protected routes, check for authentication
-  // TODO: Implement actual auth token validation with Firebase Auth
   if (!isPublicRoute) {
-    const authToken = request.cookies.get('auth-token')?.value;
-    const sessionToken = request.cookies.get('session')?.value;
+    const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME)?.value;
     
-    // If no auth token and trying to access protected route, redirect to login
-    if (!authToken && !sessionToken) {
-      // Allow the page to load for now (mock auth in development)
-      // In production, uncomment the redirect below:
-      // const loginUrl = new URL('/login', request.url);
-      // loginUrl.searchParams.set('redirect', pathname);
-      // return NextResponse.redirect(loginUrl);
+    // Check if user has a session cookie
+    if (!sessionCookie) {
+      // If Firebase is not configured (development), allow access
+      if (!isFirebaseConfigured()) {
+        // Development mode - allow access without auth
+        response.headers.set('X-Auth-Mode', 'development');
+      } else {
+        // Production mode - redirect to login
+        const loginUrl = new URL('/login', request.url);
+        loginUrl.searchParams.set('redirect', pathname);
+        return NextResponse.redirect(loginUrl);
+      }
+    } else {
+      // User has a session cookie - will be validated by API routes
+      response.headers.set('X-Auth-Mode', 'authenticated');
+    }
+  }
+  
+  // Check for protected API routes
+  const isProtectedAPI = PROTECTED_API_ROUTES.some(route => 
+    pathname.startsWith(route)
+  );
+  
+  if (isProtectedAPI) {
+    const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME)?.value;
+    
+    if (!sessionCookie && isFirebaseConfigured()) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401, headers: { 'X-Request-ID': requestId } }
+      );
     }
   }
   
