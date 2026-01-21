@@ -169,22 +169,22 @@ export default function ReportsPage() {
 
   return (
     <AppLayout>
-      <div className="p-6 space-y-6">
+      <div className="p-3 md:p-6 space-y-4 md:space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-              <BarChart3 className="w-6 h-6 text-brand-600" />
+            <h1 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-2">
+              <BarChart3 className="w-5 h-5 md:w-6 md:h-6 text-brand-600" />
               Reports & Analytics
             </h1>
-            <p className="text-muted-foreground text-sm mt-1">
+            <p className="text-muted-foreground text-xs md:text-sm mt-1">
               Comprehensive insights into your business performance
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <Select value={dateRange} onValueChange={setDateRange}>
-              <SelectTrigger className="w-[160px]">
-                <Calendar className="w-4 h-4 mr-2" />
+              <SelectTrigger className="w-[130px] md:w-[160px] text-xs md:text-sm">
+                <Calendar className="w-4 h-4 mr-1 md:mr-2" />
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -196,15 +196,15 @@ export default function ReportsPage() {
                 <SelectItem value="custom">Custom Range</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="outline">
-              <RefreshCw className="w-4 h-4 mr-2" />
-              Refresh
+            <Button variant="outline" size="sm" className="text-xs md:text-sm">
+              <RefreshCw className="w-4 h-4 mr-1 md:mr-2" />
+              <span className="hidden sm:inline">Refresh</span>
             </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button className="bg-green-600 hover:bg-green-700 text-white">
-                  <Download className="w-4 h-4 mr-2" />
-                  Export
+                <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white text-xs md:text-sm">
+                  <Download className="w-4 h-4 mr-1 md:mr-2" />
+                  <span className="hidden sm:inline">Export</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -226,80 +226,80 @@ export default function ReportsPage() {
         </div>
 
         {/* KPI Cards */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
           <Card className="bg-gradient-to-br from-brand-50 to-white border-brand-100">
-            <CardContent className="p-4">
+            <CardContent className="p-3 md:p-4">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Revenue</p>
-                  <p className="text-2xl font-bold text-brand-700 mt-1">
+                  <p className="text-xs md:text-sm text-muted-foreground">Total Revenue</p>
+                  <p className="text-lg md:text-2xl font-bold text-brand-700 mt-1">
                     ${(totalRevenue / 1000).toFixed(0)}k
                   </p>
-                  <div className="flex items-center gap-1 mt-2 text-xs text-green-600">
+                  <div className="flex items-center gap-1 mt-1 md:mt-2 text-[10px] md:text-xs text-green-600">
                     <ArrowUpRight className="w-3 h-3" />
                     <span>18.5% vs last period</span>
                   </div>
                 </div>
-                <div className="p-2.5 bg-brand-100 rounded-lg">
-                  <DollarSign className="w-5 h-5 text-brand-600" />
+                <div className="p-1.5 md:p-2.5 bg-brand-100 rounded-lg">
+                  <DollarSign className="w-4 h-4 md:w-5 md:h-5 text-brand-600" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-green-50 to-white border-green-100">
-            <CardContent className="p-4">
+            <CardContent className="p-3 md:p-4">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Net Profit</p>
-                  <p className="text-2xl font-bold text-green-700 mt-1">
+                  <p className="text-xs md:text-sm text-muted-foreground">Net Profit</p>
+                  <p className="text-lg md:text-2xl font-bold text-green-700 mt-1">
                     ${(totalProfit / 1000).toFixed(0)}k
                   </p>
-                  <div className="flex items-center gap-1 mt-2 text-xs text-green-600">
+                  <div className="flex items-center gap-1 mt-1 md:mt-2 text-[10px] md:text-xs text-green-600">
                     <ArrowUpRight className="w-3 h-3" />
                     <span>24.2% margin</span>
                   </div>
                 </div>
-                <div className="p-2.5 bg-green-100 rounded-lg">
-                  <TrendingUp className="w-5 h-5 text-green-600" />
+                <div className="p-1.5 md:p-2.5 bg-green-100 rounded-lg">
+                  <TrendingUp className="w-4 h-4 md:w-5 md:h-5 text-green-600" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-purple-50 to-white border-purple-100">
-            <CardContent className="p-4">
+            <CardContent className="p-3 md:p-4">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Total Loads</p>
-                  <p className="text-2xl font-bold text-purple-700 mt-1">{totalLoads}</p>
-                  <div className="flex items-center gap-1 mt-2 text-xs text-green-600">
+                  <p className="text-xs md:text-sm text-muted-foreground">Total Loads</p>
+                  <p className="text-lg md:text-2xl font-bold text-purple-700 mt-1">{totalLoads}</p>
+                  <div className="flex items-center gap-1 mt-1 md:mt-2 text-[10px] md:text-xs text-green-600">
                     <ArrowUpRight className="w-3 h-3" />
                     <span>12% vs last period</span>
                   </div>
                 </div>
-                <div className="p-2.5 bg-purple-100 rounded-lg">
-                  <Package className="w-5 h-5 text-purple-600" />
+                <div className="p-1.5 md:p-2.5 bg-purple-100 rounded-lg">
+                  <Package className="w-4 h-4 md:w-5 md:h-5 text-purple-600" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-amber-50 to-white border-amber-100">
-            <CardContent className="p-4">
+            <CardContent className="p-3 md:p-4">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Avg. Revenue/Load</p>
-                  <p className="text-2xl font-bold text-amber-700 mt-1">
+                  <p className="text-xs md:text-sm text-muted-foreground">Avg. Revenue/Load</p>
+                  <p className="text-lg md:text-2xl font-bold text-amber-700 mt-1">
                     ${avgRevenuePerLoad.toLocaleString()}
                   </p>
-                  <div className="flex items-center gap-1 mt-2 text-xs text-green-600">
+                  <div className="flex items-center gap-1 mt-1 md:mt-2 text-[10px] md:text-xs text-green-600">
                     <ArrowUpRight className="w-3 h-3" />
                     <span>5.8% increase</span>
                   </div>
                 </div>
-                <div className="p-2.5 bg-amber-100 rounded-lg">
-                  <Target className="w-5 h-5 text-amber-600" />
+                <div className="p-1.5 md:p-2.5 bg-amber-100 rounded-lg">
+                  <Target className="w-4 h-4 md:w-5 md:h-5 text-amber-600" />
                 </div>
               </div>
             </CardContent>
@@ -307,9 +307,9 @@ export default function ReportsPage() {
         </div>
 
         {/* Main Charts Row */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Revenue Chart */}
-          <Card className="col-span-2">
+          <Card className="lg:col-span-2">
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <div>

@@ -172,20 +172,20 @@ export default function ExpensesPage() {
     <AppLayout>
       <div className="flex flex-col h-full bg-slate-50">
         {/* Header */}
-        <header className="bg-white border-b border-slate-200 px-6 py-4 flex-shrink-0">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                <Receipt className="w-6 h-6 text-brand-blue-600" />
-                Expense Tracker
+        <header className="bg-white border-b border-slate-200 px-4 md:px-6 py-3 md:py-4 flex-shrink-0">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="min-w-0">
+              <h1 className="text-lg md:text-2xl font-bold text-slate-900 flex items-center gap-2">
+                <Receipt className="w-5 h-5 md:w-6 md:h-6 text-brand-blue-600 flex-shrink-0" />
+                <span className="truncate">Expense Tracker</span>
               </h1>
-              <p className="text-muted-foreground text-sm mt-1">
+              <p className="text-muted-foreground text-xs md:text-sm mt-0.5 md:mt-1 hidden sm:block">
                 Track and categorize all business expenses for tax deductions
               </p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Select value={dateRange} onValueChange={setDateRange}>
-                <SelectTrigger className="w-[140px]">
+                <SelectTrigger className="w-[120px] md:w-[140px] text-sm">
                   <SelectValue placeholder="Date range" />
                 </SelectTrigger>
                 <SelectContent>
@@ -195,18 +195,19 @@ export default function ExpensesPage() {
                   <SelectItem value="year">This Year</SelectItem>
                 </SelectContent>
               </Select>
-              <Button variant="outline" onClick={handleExport}>
-                <Download className="w-4 h-4 mr-2" />
-                Export
+              <Button variant="outline" onClick={handleExport} size="sm" className="md:size-default">
+                <Download className="w-4 h-4 md:mr-2" />
+                <span className="hidden md:inline">Export</span>
               </Button>
               <Dialog open={addExpenseOpen} onOpenChange={setAddExpenseOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-blue-600 hover:bg-blue-700">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add Expense
+                  <Button className="bg-blue-600 hover:bg-blue-700" size="sm">
+                    <Plus className="w-4 h-4 md:mr-2" />
+                    <span className="hidden md:inline">Add Expense</span>
+                    <span className="md:hidden">Add</span>
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[500px]">
+                <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
                   <DialogHeader>
                     <DialogTitle>Add New Expense</DialogTitle>
                     <DialogDescription>
@@ -299,9 +300,9 @@ export default function ExpensesPage() {
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-auto p-6">
+        <main className="flex-1 overflow-auto p-4 md:p-6">
           {/* Stats Cards */}
-          <div className="grid grid-cols-5 gap-4 mb-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 mb-6 overflow-x-auto">
             <Card>
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
@@ -381,9 +382,9 @@ export default function ExpensesPage() {
             </Card>
           </div>
 
-          <div className="grid grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6">
             {/* Expense List */}
-            <div className="col-span-3">
+            <div className="lg:col-span-3 order-2 lg:order-1">
               <Card>
                 <CardHeader>
                   <div className="flex items-center justify-between">
@@ -504,7 +505,7 @@ export default function ExpensesPage() {
             </div>
 
             {/* Sidebar */}
-            <div className="space-y-4">
+            <div className="space-y-4 order-1 lg:order-2">
               {/* Category Breakdown */}
               <Card>
                 <CardHeader className="pb-3">

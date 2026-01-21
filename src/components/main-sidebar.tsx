@@ -2,7 +2,8 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { useAuth } from "@/contexts/auth-context"
 import {
   Home,
   Truck,
@@ -100,8 +101,15 @@ const systemMenuItems: MenuItem[] = [
 
 export function MainSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
   const { state } = useSidebar()
+  const { signOut } = useAuth()
   const isCollapsed = state === "collapsed"
+
+  const handleSignOut = async () => {
+    await signOut()
+    router.push('/login')
+  }
 
   const renderMenuItem = (item: MenuItem) => {
     const isActive = pathname === item.href || 
@@ -378,20 +386,20 @@ export function MainSidebar() {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push('/settings')} className="cursor-pointer">
                 <Settings className="mr-2 h-4 w-4" />
                 Account Settings
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push('/settings?tab=notifications')} className="cursor-pointer">
                 <Bell className="mr-2 h-4 w-4" />
                 Notification Preferences
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push('/settings?tab=profile')} className="cursor-pointer">
                 <Mail className="mr-2 h-4 w-4" />
                 Email Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600 focus:text-red-600">
+              <DropdownMenuItem onClick={handleSignOut} className="text-red-600 focus:text-red-600 cursor-pointer">
                 <LogOut className="mr-2 h-4 w-4" />
                 Sign Out
               </DropdownMenuItem>

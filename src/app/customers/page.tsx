@@ -419,19 +419,20 @@ export default function CustomersPage() {
     <AppLayout>
       <div className="flex flex-col h-full">
         {/* Header */}
-        <header className="bg-white border-b border-slate-200 px-6 py-4 flex-shrink-0">
-          <div className="flex items-center justify-between">
+        <header className="bg-white border-b border-slate-200 px-3 md:px-6 py-3 md:py-4 flex-shrink-0">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h1 className="font-headline text-2xl font-bold">Customers</h1>
-              <p className="text-sm text-muted-foreground">
+              <h1 className="font-headline text-xl md:text-2xl font-bold">Customers</h1>
+              <p className="text-xs md:text-sm text-muted-foreground">
                 Manage your shippers, consignees, and brokers
               </p>
             </div>
             <Dialog>
               <DialogTrigger asChild>
-                <Button>
-                  <PlusCircle className="h-4 w-4 mr-2" />
-                  Add Customer
+                <Button size="sm" className="text-xs md:text-sm">
+                  <PlusCircle className="h-4 w-4 mr-1 md:mr-2" />
+                  <span className="hidden sm:inline">Add Customer</span>
+                  <span className="sm:hidden">Add</span>
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[600px]">
@@ -527,42 +528,42 @@ export default function CustomersPage() {
         </header>
 
         {/* Stats */}
-        <div className="bg-white border-b border-slate-200 px-6 py-4">
-          <div className="grid grid-cols-4 gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-brand-blue-100 flex items-center justify-center">
-                <Building2 className="h-5 w-5 text-brand-blue-600" />
+        <div className="bg-white border-b border-slate-200 px-3 md:px-6 py-3 md:py-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-brand-blue-100 flex items-center justify-center">
+                <Building2 className="h-4 w-4 md:h-5 md:w-5 text-brand-blue-600" />
               </div>
               <div>
-                <p className="text-2xl font-bold">{stats.totalCustomers}</p>
-                <p className="text-xs text-slate-500">Total Customers</p>
+                <p className="text-lg md:text-2xl font-bold">{stats.totalCustomers}</p>
+                <p className="text-[10px] md:text-xs text-slate-500">Total Customers</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-brand-green-100 flex items-center justify-center">
-                <CheckCircle2 className="h-5 w-5 text-brand-green-600" />
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-brand-green-100 flex items-center justify-center">
+                <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-brand-green-600" />
               </div>
               <div>
-                <p className="text-2xl font-bold">{stats.activeCustomers}</p>
-                <p className="text-xs text-slate-500">Active Customers</p>
+                <p className="text-lg md:text-2xl font-bold">{stats.activeCustomers}</p>
+                <p className="text-[10px] md:text-xs text-slate-500">Active Customers</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center">
-                <DollarSign className="h-5 w-5 text-emerald-600" />
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-emerald-100 flex items-center justify-center">
+                <DollarSign className="h-4 w-4 md:h-5 md:w-5 text-emerald-600" />
               </div>
               <div>
-                <p className="text-2xl font-bold">${(stats.totalRevenue / 1000).toFixed(0)}k</p>
-                <p className="text-xs text-slate-500">Total Revenue</p>
+                <p className="text-lg md:text-2xl font-bold">${(stats.totalRevenue / 1000).toFixed(0)}k</p>
+                <p className="text-[10px] md:text-xs text-slate-500">Total Revenue</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center">
-                <Star className="h-5 w-5 text-amber-600" />
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-amber-100 flex items-center justify-center">
+                <Star className="h-4 w-4 md:h-5 md:w-5 text-amber-600" />
               </div>
               <div>
-                <p className="text-2xl font-bold">{stats.avgRating.toFixed(1)}</p>
-                <p className="text-xs text-slate-500">Avg Rating</p>
+                <p className="text-lg md:text-2xl font-bold">{stats.avgRating.toFixed(1)}</p>
+                <p className="text-[10px] md:text-xs text-slate-500">Avg Rating</p>
               </div>
             </div>
           </div>

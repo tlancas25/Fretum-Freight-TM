@@ -5,10 +5,12 @@
  * This should only be imported in server-side code (API routes, middleware).
  * 
  * Copyright (c) 2026 Terrell A Lancaster. All Rights Reserved.
+ * @module firebase/admin
  */
 
 import { initializeApp, getApps, cert, App } from 'firebase-admin/app';
 import { getAuth, Auth } from 'firebase-admin/auth';
+import { cookies } from 'next/headers';
 
 let adminApp: App;
 let adminAuth: Auth;
@@ -180,6 +182,32 @@ export async function getUserByUid(uid: string) {
     const auth = getFirebaseAdminAuth();
     return await auth.getUser(uid);
   } catch {
+    return null;
+  }
+}
+
+/**
+ * Get the authenticated user from session cookie
+ * Use this in API routes to get the current user
+ */
+export async function getSessionUser(): Promise<{
+  uid: string;
+  email?: string;
+  emailVerified?: boolean;
+  name?: string;
+  role?: string;
+} | null> {
+  try {
+    const cookieStore = await cookies();
+    const sessionCookie = cookieStore.get('__session')?.value;
+    
+    if (!sessionCookie) {
+      return null;
+    }
+    
+    return await verifySessionCookie(sessionCookie);
+  } catch (error) {
+    console.error('Failed to get session user:', error);
     return null;
   }
 }

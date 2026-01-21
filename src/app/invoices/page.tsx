@@ -297,46 +297,47 @@ export default function InvoicesPage() {
 
   return (
     <AppLayout>
-      <div className="p-6 space-y-6">
+      <div className="p-3 md:p-6 space-y-4 md:space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-              <Receipt className="w-6 h-6 text-brand-600" />
+            <h1 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-2">
+              <Receipt className="w-5 h-5 md:w-6 md:h-6 text-brand-600" />
               Invoicing
             </h1>
-            <p className="text-muted-foreground text-sm mt-1">
+            <p className="text-muted-foreground text-xs md:text-sm mt-1">
               Manage invoices, track payments, and handle billing
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline">
-              <Download className="w-4 h-4 mr-2" />
-              Export
+            <Button variant="outline" size="sm" className="text-xs md:text-sm">
+              <Download className="w-4 h-4 mr-1 md:mr-2" />
+              <span className="hidden sm:inline">Export</span>
             </Button>
-            <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={() => setCreateDialogOpen(true)}>
-              <Plus className="w-4 h-4 mr-2" />
-              Create Invoice
+            <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white text-xs md:text-sm" onClick={() => setCreateDialogOpen(true)}>
+              <Plus className="w-4 h-4 mr-1 md:mr-2" />
+              <span className="hidden sm:inline">Create Invoice</span>
+              <span className="sm:hidden">New</span>
             </Button>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
           <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 bg-blue-100 rounded-lg">
-                  <Wallet className="w-5 h-5 text-blue-600" />
+            <CardContent className="p-3 md:p-4">
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className="p-1.5 md:p-2.5 bg-blue-100 rounded-lg">
+                  <Wallet className="w-4 h-4 md:w-5 md:h-5 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-slate-900">
+                  <p className="text-lg md:text-2xl font-bold text-slate-900">
                     ${totalOutstanding.toLocaleString()}
                   </p>
-                  <p className="text-sm text-muted-foreground">Outstanding</p>
+                  <p className="text-xs md:text-sm text-muted-foreground">Outstanding</p>
                 </div>
               </div>
-              <div className="mt-3 flex items-center gap-1 text-xs text-amber-600">
+              <div className="mt-2 md:mt-3 flex items-center gap-1 text-[10px] md:text-xs text-amber-600">
                 <Clock className="w-3 h-3" />
                 <span>{pendingCount} invoices pending</span>
               </div>
@@ -344,19 +345,19 @@ export default function InvoicesPage() {
           </Card>
 
           <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 bg-red-100 rounded-lg">
-                  <AlertCircle className="w-5 h-5 text-red-600" />
+            <CardContent className="p-3 md:p-4">
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className="p-1.5 md:p-2.5 bg-red-100 rounded-lg">
+                  <AlertCircle className="w-4 h-4 md:w-5 md:h-5 text-red-600" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-slate-900">
+                  <p className="text-lg md:text-2xl font-bold text-slate-900">
                     ${totalOverdue.toLocaleString()}
                   </p>
-                  <p className="text-sm text-muted-foreground">Overdue</p>
+                  <p className="text-xs md:text-sm text-muted-foreground">Overdue</p>
                 </div>
               </div>
-              <div className="mt-3 flex items-center gap-1 text-xs text-red-600">
+              <div className="mt-2 md:mt-3 flex items-center gap-1 text-[10px] md:text-xs text-red-600">
                 <TrendingDown className="w-3 h-3" />
                 <span>{invoices.filter((i) => i.status === "overdue").length} past due</span>
               </div>
@@ -364,19 +365,19 @@ export default function InvoicesPage() {
           </Card>
 
           <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 bg-green-100 rounded-lg">
-                  <CheckCircle2 className="w-5 h-5 text-green-600" />
+            <CardContent className="p-3 md:p-4">
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className="p-1.5 md:p-2.5 bg-green-100 rounded-lg">
+                  <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-green-600" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-slate-900">
+                  <p className="text-lg md:text-2xl font-bold text-slate-900">
                     ${paidThisMonth.toLocaleString()}
                   </p>
-                  <p className="text-sm text-muted-foreground">Paid This Month</p>
+                  <p className="text-xs md:text-sm text-muted-foreground">Paid This Month</p>
                 </div>
               </div>
-              <div className="mt-3 flex items-center gap-1 text-xs text-green-600">
+              <div className="mt-2 md:mt-3 flex items-center gap-1 text-[10px] md:text-xs text-green-600">
                 <TrendingUp className="w-3 h-3" />
                 <span>+12% from last month</span>
               </div>
@@ -384,19 +385,19 @@ export default function InvoicesPage() {
           </Card>
 
           <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 bg-purple-100 rounded-lg">
-                  <BarChart3 className="w-5 h-5 text-purple-600" />
+            <CardContent className="p-3 md:p-4">
+              <div className="flex items-center gap-2 md:gap-3">
+                <div className="p-1.5 md:p-2.5 bg-purple-100 rounded-lg">
+                  <BarChart3 className="w-4 h-4 md:w-5 md:h-5 text-purple-600" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-slate-900">
+                  <p className="text-lg md:text-2xl font-bold text-slate-900">
                     ${invoices.reduce((sum, i) => sum + i.amount, 0).toLocaleString()}
                   </p>
-                  <p className="text-sm text-muted-foreground">Total Invoiced</p>
+                  <p className="text-xs md:text-sm text-muted-foreground">Total Invoiced</p>
                 </div>
               </div>
-              <div className="mt-3 flex items-center gap-1 text-xs text-purple-600">
+              <div className="mt-2 md:mt-3 flex items-center gap-1 text-[10px] md:text-xs text-purple-600">
                 <FileText className="w-3 h-3" />
                 <span>{invoices.length} invoices created</span>
               </div>
@@ -406,15 +407,15 @@ export default function InvoicesPage() {
 
         {/* Tabs */}
         <Tabs defaultValue="all" className="space-y-4">
-          <div className="flex items-center justify-between">
-            <TabsList>
-              <TabsTrigger value="all" onClick={() => setStatusFilter("all")}>
-                All Invoices
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <TabsList className="h-auto flex-wrap">
+              <TabsTrigger value="all" onClick={() => setStatusFilter("all")} className="text-xs md:text-sm">
+                All
               </TabsTrigger>
-              <TabsTrigger value="pending" onClick={() => setStatusFilter("pending")}>
+              <TabsTrigger value="pending" onClick={() => setStatusFilter("pending")} className="text-xs md:text-sm">
                 Pending
               </TabsTrigger>
-              <TabsTrigger value="sent" onClick={() => setStatusFilter("sent")}>
+              <TabsTrigger value="sent" onClick={() => setStatusFilter("sent")} className="text-xs md:text-sm">
                 Sent
               </TabsTrigger>
               <TabsTrigger value="paid" onClick={() => setStatusFilter("paid")}>

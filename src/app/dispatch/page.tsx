@@ -449,13 +449,13 @@ function DispatchColumn({
   onAssign: (itemId: string) => void;
 }) {
   return (
-    <div className="flex flex-col min-w-[280px] max-w-[320px] flex-1 bg-slate-50 rounded-lg">
+    <div className="flex flex-col min-w-[260px] sm:min-w-[280px] max-w-[320px] flex-1 bg-slate-50 rounded-lg">
       {/* Column Header */}
-      <div className={cn("p-3 rounded-t-lg", color)}>
+      <div className={cn("p-2 md:p-3 rounded-t-lg", color)}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Icon className="w-4 h-4" />
-            <span className="font-semibold text-sm">{title}</span>
+            <span className="font-semibold text-xs md:text-sm">{title}</span>
           </div>
           <Badge variant="secondary" className="bg-white/20 text-inherit text-xs px-1.5">
             {items.length}
@@ -464,7 +464,7 @@ function DispatchColumn({
       </div>
 
       {/* Column Content */}
-      <ScrollArea className="flex-1 p-2">
+      <ScrollArea className="flex-1 p-1.5 md:p-2">
         <div className="space-y-0">
           {items.map((item) => (
             <DispatchCard 
@@ -525,105 +525,105 @@ export default function DispatchPage() {
     <AppLayout>
       <div className="flex flex-col h-full">
         {/* Header */}
-        <div className="flex-shrink-0 border-b bg-white p-4">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                <KanbanSquare className="w-6 h-6 text-brand-600" />
-                Dispatch Board
+        <div className="flex-shrink-0 border-b bg-white p-3 md:p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 md:mb-4">
+            <div className="min-w-0">
+              <h1 className="text-lg md:text-2xl font-bold text-slate-900 flex items-center gap-2">
+                <KanbanSquare className="w-5 h-5 md:w-6 md:h-6 text-brand-600 flex-shrink-0" />
+                <span className="truncate">Dispatch Board</span>
               </h1>
-              <p className="text-muted-foreground text-sm mt-1">
+              <p className="text-muted-foreground text-xs md:text-sm mt-0.5 md:mt-1 hidden sm:block">
                 Real-time load management and driver assignment
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="hidden md:flex">
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Refresh
               </Button>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="hidden lg:flex">
                 <Maximize2 className="w-4 h-4 mr-2" />
                 Full Screen
               </Button>
               <Button className="bg-green-600 hover:bg-green-700 text-white" size="sm">
-                <Plus className="w-4 h-4 mr-2" />
-                New Load
+                <Plus className="w-4 h-4 md:mr-2" />
+                <span className="hidden md:inline">New Load</span>
               </Button>
             </div>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-5 gap-3">
-            <Card className="p-2.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-3">
+            <Card className="p-2 md:p-2.5">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 bg-blue-100 rounded">
-                  <Package className="w-4 h-4 text-blue-600" />
+                <div className="p-1 md:p-1.5 bg-blue-100 rounded">
+                  <Package className="w-3.5 h-3.5 md:w-4 md:h-4 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-lg font-bold text-blue-600">{totalLoads}</p>
-                  <p className="text-[10px] text-muted-foreground">Total Loads</p>
+                  <p className="text-base md:text-lg font-bold text-blue-600">{totalLoads}</p>
+                  <p className="text-[9px] md:text-[10px] text-muted-foreground">Total Loads</p>
                 </div>
               </div>
             </Card>
-            <Card className="p-2.5">
+            <Card className="p-2 md:p-2.5">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 bg-amber-100 rounded">
-                  <AlertCircle className="w-4 h-4 text-amber-600" />
+                <div className="p-1 md:p-1.5 bg-amber-100 rounded">
+                  <AlertCircle className="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-600" />
                 </div>
                 <div>
-                  <p className="text-lg font-bold text-amber-600">{unassigned.length}</p>
-                  <p className="text-[10px] text-muted-foreground">Unassigned</p>
+                  <p className="text-base md:text-lg font-bold text-amber-600">{unassigned.length}</p>
+                  <p className="text-[9px] md:text-[10px] text-muted-foreground">Unassigned</p>
                 </div>
               </div>
             </Card>
-            <Card className="p-2.5">
+            <Card className="p-2 md:p-2.5">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 bg-purple-100 rounded">
-                  <Navigation className="w-4 h-4 text-purple-600" />
+                <div className="p-1 md:p-1.5 bg-purple-100 rounded">
+                  <Navigation className="w-3.5 h-3.5 md:w-4 md:h-4 text-purple-600" />
                 </div>
                 <div>
-                  <p className="text-lg font-bold text-purple-600">{activeLoads}</p>
-                  <p className="text-[10px] text-muted-foreground">Active</p>
+                  <p className="text-base md:text-lg font-bold text-purple-600">{activeLoads}</p>
+                  <p className="text-[9px] md:text-[10px] text-muted-foreground">Active</p>
                 </div>
               </div>
             </Card>
-            <Card className="p-2.5">
+            <Card className="p-2 md:p-2.5 hidden sm:block">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 bg-green-100 rounded">
-                  <CheckCircle2 className="w-4 h-4 text-green-600" />
+                <div className="p-1 md:p-1.5 bg-green-100 rounded">
+                  <CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4 text-green-600" />
                 </div>
                 <div>
-                  <p className="text-lg font-bold text-green-600">{completedToday}</p>
-                  <p className="text-[10px] text-muted-foreground">Completed</p>
+                  <p className="text-base md:text-lg font-bold text-green-600">{completedToday}</p>
+                  <p className="text-[9px] md:text-[10px] text-muted-foreground">Completed</p>
                 </div>
               </div>
             </Card>
-            <Card className="p-2.5">
+            <Card className="p-2 md:p-2.5 hidden lg:block">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 bg-emerald-100 rounded">
-                  <TrendingUp className="w-4 h-4 text-emerald-600" />
+                <div className="p-1 md:p-1.5 bg-emerald-100 rounded">
+                  <TrendingUp className="w-3.5 h-3.5 md:w-4 md:h-4 text-emerald-600" />
                 </div>
                 <div>
-                  <p className="text-lg font-bold text-emerald-600">${(totalRevenue / 1000).toFixed(1)}k</p>
-                  <p className="text-[10px] text-muted-foreground">Revenue</p>
+                  <p className="text-base md:text-lg font-bold text-emerald-600">${(totalRevenue / 1000).toFixed(1)}k</p>
+                  <p className="text-[9px] md:text-[10px] text-muted-foreground">Revenue</p>
                 </div>
               </div>
             </Card>
           </div>
 
           {/* Search & Filter */}
-          <div className="flex items-center gap-3 mt-4">
-            <div className="relative flex-1 max-w-xs">
+          <div className="flex items-center gap-2 md:gap-3 mt-3 md:mt-4 flex-wrap sm:flex-nowrap">
+            <div className="relative flex-1 min-w-[180px]">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 placeholder="Search loads, customers, drivers..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9"
+                className="pl-9 text-sm"
               />
             </div>
             <Select defaultValue="all">
-              <SelectTrigger className="w-[140px]">
+              <SelectTrigger className="w-[120px] md:w-[140px] text-sm">
                 <SelectValue placeholder="Priority" />
               </SelectTrigger>
               <SelectContent>
@@ -634,7 +634,7 @@ export default function DispatchPage() {
               </SelectContent>
             </Select>
             <Select defaultValue="all">
-              <SelectTrigger className="w-[140px]">
+              <SelectTrigger className="w-[120px] md:w-[140px] text-sm hidden sm:flex">
                 <SelectValue placeholder="Equipment" />
               </SelectTrigger>
               <SelectContent>

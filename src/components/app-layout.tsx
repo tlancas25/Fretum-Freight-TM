@@ -6,14 +6,23 @@ import { MainSidebar } from '@/components/main-sidebar';
 import { MobileBottomNav } from '@/components/mobile-bottom-nav';
 import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
-import { CircleUser, Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { CircleUser, Search, ChevronLeft, ChevronRight, LogOut, Settings, HelpCircle } from 'lucide-react';
 import { Input } from './ui/input';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/auth-context';
+import { useRouter } from 'next/navigation';
 
 function Header() {
     const { toggleSidebar, state } = useSidebar();
+    const { signOut } = useAuth();
+    const router = useRouter();
     const isCollapsed = state === "collapsed";
+
+    const handleLogout = async () => {
+        await signOut();
+        router.push('/login');
+    };
     
     return (
         <header className="flex h-14 items-center gap-4 border-b bg-white/95 backdrop-blur-sm px-4 lg:h-[60px] lg:px-6 sticky top-0 z-20 shadow-sm">
@@ -61,10 +70,19 @@ function Header() {
                 <DropdownMenuContent align="end">
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Settings</DropdownMenuItem>
-                    <DropdownMenuItem>Support</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push('/settings')} className="cursor-pointer">
+                        <Settings className="mr-2 h-4 w-4" />
+                        Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => window.open('mailto:support@fretumfreight.com', '_blank')} className="cursor-pointer">
+                        <HelpCircle className="mr-2 h-4 w-4" />
+                        Support
+                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleLogout} className="text-red-600 focus:text-red-600">
+                        <LogOut className="mr-2 h-4 w-4" />
+                        Sign Out
+                    </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </header>

@@ -364,20 +364,20 @@ export default function SettlementsPage() {
     <AppLayout>
       <div className="flex flex-col h-full bg-slate-50">
         {/* Header */}
-        <header className="bg-white border-b border-slate-200 px-6 py-4 flex-shrink-0">
-          <div className="flex items-center justify-between">
+        <header className="bg-white border-b border-slate-200 px-3 md:px-6 py-3 md:py-4 flex-shrink-0">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                <Wallet className="w-6 h-6 text-brand-blue-600" />
+              <h1 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-2">
+                <Wallet className="w-5 h-5 md:w-6 md:h-6 text-brand-blue-600" />
                 Driver Settlements
               </h1>
-              <p className="text-muted-foreground text-sm mt-1">
+              <p className="text-muted-foreground text-xs md:text-sm mt-1">
                 Calculate and process driver pay for completed loads
               </p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[140px] md:w-[180px] text-xs md:text-sm">
                   <SelectValue placeholder="Pay Period" />
                 </SelectTrigger>
                 <SelectContent>
@@ -386,15 +386,16 @@ export default function SettlementsPage() {
                   <SelectItem value="custom">Custom Range</SelectItem>
                 </SelectContent>
               </Select>
-              <Button variant="outline">
-                <Download className="w-4 h-4 mr-2" />
-                Export
+              <Button variant="outline" size="sm" className="text-xs md:text-sm">
+                <Download className="w-4 h-4 mr-1 md:mr-2" />
+                <span className="hidden sm:inline">Export</span>
               </Button>
               <Dialog open={createSettlementOpen} onOpenChange={setCreateSettlementOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-blue-600 hover:bg-blue-700">
-                    <Plus className="w-4 h-4 mr-2" />
-                    Create Settlement
+                  <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-xs md:text-sm">
+                    <Plus className="w-4 h-4 mr-1 md:mr-2" />
+                    <span className="hidden sm:inline">Create Settlement</span>
+                    <span className="sm:hidden">New</span>
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[500px]">
@@ -470,60 +471,60 @@ export default function SettlementsPage() {
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-auto p-6">
+        <main className="flex-1 overflow-auto p-3 md:p-6">
           {/* Stats Cards */}
-          <div className="grid grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 mb-4 md:mb-6">
             <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-amber-100 rounded-lg">
-                    <Clock className="w-5 h-5 text-amber-600" />
+              <CardContent className="p-3 md:p-4">
+                <div className="flex items-center gap-2 md:gap-3">
+                  <div className="p-1.5 md:p-2 bg-amber-100 rounded-lg">
+                    <Clock className="w-4 h-4 md:w-5 md:h-5 text-amber-600" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold">${totalPendingAmount.toLocaleString()}</p>
-                    <p className="text-xs text-muted-foreground">Pending Settlements</p>
+                    <p className="text-lg md:text-2xl font-bold">${totalPendingAmount.toLocaleString()}</p>
+                    <p className="text-[10px] md:text-xs text-muted-foreground">Pending</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-green-100 rounded-lg">
-                    <CheckCircle2 className="w-5 h-5 text-green-600" />
+              <CardContent className="p-3 md:p-4">
+                <div className="flex items-center gap-2 md:gap-3">
+                  <div className="p-1.5 md:p-2 bg-green-100 rounded-lg">
+                    <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-green-600" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold">${totalPaidThisMonth.toLocaleString()}</p>
-                    <p className="text-xs text-muted-foreground">Paid This Month</p>
+                    <p className="text-lg md:text-2xl font-bold">${totalPaidThisMonth.toLocaleString()}</p>
+                    <p className="text-[10px] md:text-xs text-muted-foreground">Paid This Month</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <User className="w-5 h-5 text-blue-600" />
+              <CardContent className="p-3 md:p-4">
+                <div className="flex items-center gap-2 md:gap-3">
+                  <div className="p-1.5 md:p-2 bg-blue-100 rounded-lg">
+                    <User className="w-4 h-4 md:w-5 md:h-5 text-blue-600" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold">{drivers.length}</p>
-                    <p className="text-xs text-muted-foreground">Active Drivers</p>
+                    <p className="text-lg md:text-2xl font-bold">{drivers.length}</p>
+                    <p className="text-[10px] md:text-xs text-muted-foreground">Active Drivers</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-purple-100 rounded-lg">
-                    <Truck className="w-5 h-5 text-purple-600" />
+              <CardContent className="p-3 md:p-4">
+                <div className="flex items-center gap-2 md:gap-3">
+                  <div className="p-1.5 md:p-2 bg-purple-100 rounded-lg">
+                    <Truck className="w-4 h-4 md:w-5 md:h-5 text-purple-600" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold">{completedLoads.length}</p>
-                    <p className="text-xs text-muted-foreground">Loads This Period</p>
+                    <p className="text-lg md:text-2xl font-bold">{completedLoads.length}</p>
+                    <p className="text-[10px] md:text-xs text-muted-foreground">Loads This Period</p>
                   </div>
                 </div>
               </CardContent>
@@ -532,10 +533,10 @@ export default function SettlementsPage() {
 
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-            <TabsList>
-              <TabsTrigger value="pending">Pending Settlements</TabsTrigger>
-              <TabsTrigger value="history">Settlement History</TabsTrigger>
-              <TabsTrigger value="drivers">Driver Pay Rates</TabsTrigger>
+            <TabsList className="h-auto flex-wrap">
+              <TabsTrigger value="pending" className="text-xs md:text-sm">Pending</TabsTrigger>
+              <TabsTrigger value="history" className="text-xs md:text-sm">History</TabsTrigger>
+              <TabsTrigger value="drivers" className="text-xs md:text-sm">Pay Rates</TabsTrigger>
             </TabsList>
 
             {/* Pending Settlements Tab */}

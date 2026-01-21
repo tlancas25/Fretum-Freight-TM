@@ -109,24 +109,24 @@ interface StatCardProps {
 function StatCard({ title, value, change, changeType, icon: Icon, iconBgColor, iconColor }: StatCardProps) {
   return (
     <Card className="stat-card border-slate-200/60">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 md:pb-2 p-3 md:p-4">
+        <CardTitle className="text-xs font-medium text-muted-foreground line-clamp-1">
           {title}
         </CardTitle>
-        <div className={cn("p-2.5 rounded-xl shadow-sm", iconBgColor)}>
-          <Icon className={cn("h-4 w-4", iconColor)} />
+        <div className={cn("p-1.5 md:p-2.5 rounded-lg md:rounded-xl shadow-sm", iconBgColor)}>
+          <Icon className={cn("h-3 w-3 md:h-4 md:w-4", iconColor)} />
         </div>
       </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold font-headline">{value}</div>
-        <div className="flex items-center gap-1 mt-1">
+      <CardContent className="p-3 md:p-4 pt-0">
+        <div className="text-lg md:text-2xl font-bold font-headline">{value}</div>
+        <div className="flex items-center gap-1 mt-0.5 md:mt-1">
           {changeType === "positive" ? (
-            <ArrowUpRight className="h-3 w-3 text-emerald-500" />
+            <ArrowUpRight className="h-3 w-3 text-emerald-500 flex-shrink-0" />
           ) : changeType === "negative" ? (
-            <ArrowDownRight className="h-3 w-3 text-red-500" />
+            <ArrowDownRight className="h-3 w-3 text-red-500 flex-shrink-0" />
           ) : null}
           <p className={cn(
-            "text-xs font-medium",
+            "text-[10px] md:text-xs font-medium line-clamp-1",
             changeType === "positive" && "text-emerald-600",
             changeType === "negative" && "text-red-600",
             changeType === "neutral" && "text-muted-foreground"
@@ -142,29 +142,30 @@ function StatCard({ title, value, change, changeType, icon: Icon, iconBgColor, i
 export default function DashboardPage() {
   return (
     <AppLayout>
-      <main className="flex flex-1 flex-col gap-4 p-4 md:p-6 overflow-auto">
+      <main className="flex flex-1 flex-col gap-3 md:gap-4 p-3 md:p-6 overflow-auto">
         {/* Page Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-bold font-headline text-foreground">Dashboard</h1>
-            <p className="text-muted-foreground text-sm">Welcome back! Here's what's happening with your fleet.</p>
+            <h1 className="text-xl md:text-2xl font-bold font-headline text-foreground">Dashboard</h1>
+            <p className="text-muted-foreground text-xs md:text-sm">Welcome back! Here's what's happening with your fleet.</p>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm">
-              <CalendarDays className="w-4 h-4 mr-2" />
-              Today
+            <Button variant="outline" size="sm" className="text-xs md:text-sm">
+              <CalendarDays className="w-4 h-4 mr-1 md:mr-2" />
+              <span className="hidden xs:inline">Today</span>
             </Button>
             <Link href="/loads/new">
-              <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
-                <Package className="w-4 h-4 mr-2" />
-                New Load
+              <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white text-xs md:text-sm">
+                <Package className="w-4 h-4 mr-1 md:mr-2" />
+                <span className="hidden sm:inline">New Load</span>
+                <span className="sm:hidden">New</span>
               </Button>
             </Link>
           </div>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-2 md:gap-3 grid-cols-2 lg:grid-cols-4">
           <StatCard 
             title="Total Revenue"
             value="$142,580"

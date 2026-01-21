@@ -558,31 +558,31 @@ export default function FleetPage() {
     <AppLayout>
       <div className="flex flex-col h-full">
         {/* Header */}
-        <div className="flex-shrink-0 border-b bg-white p-4">
-          <div className="flex items-center justify-between mb-4">
+        <div className="flex-shrink-0 border-b bg-white p-3 md:p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3 md:mb-4">
             <div>
-              <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                <Users className="w-6 h-6 text-brand-600" />
+              <h1 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-2">
+                <Users className="w-5 h-5 md:w-6 md:h-6 text-brand-600" />
                 Fleet Management
               </h1>
-              <p className="text-muted-foreground text-sm mt-1">
+              <p className="text-muted-foreground text-xs md:text-sm mt-1">
                 Manage your drivers, trucks, and trailers
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm">
-                <Download className="w-4 h-4 mr-2" />
-                Export
+              <Button variant="outline" size="sm" className="text-xs md:text-sm">
+                <Download className="w-4 h-4 mr-1 md:mr-2" />
+                <span className="hidden sm:inline">Export</span>
               </Button>
-              <Button variant="outline" size="sm">
-                <RefreshCw className="w-4 h-4 mr-2" />
-                Sync ELD
+              <Button variant="outline" size="sm" className="text-xs md:text-sm">
+                <RefreshCw className="w-4 h-4 mr-1 md:mr-2" />
+                <span className="hidden sm:inline">Sync ELD</span>
               </Button>
             </div>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
             <Card className="p-3">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-green-100 rounded-lg">

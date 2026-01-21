@@ -405,7 +405,7 @@ function KanbanColumn({
 
   return (
     <section 
-      className="bg-slate-100 flex-1 min-w-[280px] max-w-[320px] max-h-full flex flex-col rounded-sm border border-slate-200"
+      className="bg-slate-100 flex-1 min-w-[260px] sm:min-w-[280px] max-w-[320px] max-h-full flex flex-col rounded-sm border border-slate-200"
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
@@ -668,7 +668,7 @@ export default function LoadsPage() {
     <AppLayout>
       <div className="flex flex-col h-full overflow-hidden">
         {/* Stats Header */}
-        <header className="h-14 bg-white border-b border-slate-200 flex items-center px-6 justify-between flex-shrink-0">
+        <header className="min-h-14 bg-white border-b border-slate-200 flex flex-col sm:flex-row sm:items-center px-4 md:px-6 py-2 sm:py-0 justify-between flex-shrink-0 gap-2 sm:gap-0">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
               <TruckIcon className="h-5 w-5 text-primary" />
@@ -678,7 +678,7 @@ export default function LoadsPage() {
             </div>
           </div>
 
-          <div className="flex gap-6">
+          <div className="flex gap-4 md:gap-6 text-center sm:text-left">
             <div className="flex flex-col">
               <span className="text-[10px] uppercase text-slate-500 font-semibold tracking-wide">Active Loads</span>
               <span className="text-sm font-bold">{activeLoads}</span>
@@ -687,19 +687,19 @@ export default function LoadsPage() {
               <span className="text-[10px] uppercase text-slate-500 font-semibold tracking-wide">On-Time %</span>
               <span className="text-sm font-bold text-emerald-600">{onTimePercentage}%</span>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col hidden sm:flex">
               <span className="text-[10px] uppercase text-slate-500 font-semibold tracking-wide">Total Revenue</span>
               <span className="text-sm font-bold">${totalRevenue.toLocaleString()}</span>
             </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 justify-end">
             {/* Export Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="gap-2">
                   <Download className="h-3.5 w-3.5" />
-                  Export
+                  <span className="hidden sm:inline">Export</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -713,31 +713,31 @@ export default function LoadsPage() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Link href="/loads/extract">
+            <Link href="/loads/extract" className="hidden sm:block">
               <Button variant="outline" size="sm" className="gap-2">
                 <ScanLine className="h-3.5 w-3.5" />
-                Extract
+                <span className="hidden md:inline">Extract</span>
               </Button>
             </Link>
             <Link href="/loads/new">
               <Button size="sm" className="gap-2">
                 <PlusCircle className="h-3.5 w-3.5" />
-                New Load
+                <span className="hidden sm:inline">New Load</span>
               </Button>
             </Link>
           </div>
         </header>
 
         {/* Search & Filters Bar */}
-        <div className="bg-white border-b border-slate-200 px-6 py-3 flex items-center gap-3">
+        <div className="bg-white border-b border-slate-200 px-4 md:px-6 py-2 md:py-3 flex items-center gap-2 md:gap-3 flex-wrap sm:flex-nowrap">
           {/* Search Input */}
-          <div className="relative flex-1 max-w-md">
+          <div className="relative flex-1 min-w-[180px]">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <Input
               placeholder="Search loads by ID, city, driver..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 pr-9"
+              className="pl-9 pr-9 text-sm"
             />
             {searchQuery && (
               <button

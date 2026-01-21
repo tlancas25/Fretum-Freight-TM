@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import { AppLayout } from "@/components/app-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -46,6 +47,7 @@ import {
   Sun,
   Moon,
   Monitor,
+  X,
 } from "lucide-react";
 import {
   Dialog,
@@ -57,10 +59,33 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+// Storage keys for localStorage
+const STORAGE_KEYS = {
+  company: 'settings_company',
+  user: 'settings_user',
+  notifications: 'settings_notifications',
+  loadDefaults: 'settings_loadDefaults',
+  companyLogo: 'settings_companyLogo',
+  profilePhoto: 'settings_profilePhoto',
+};
+
 export default function SettingsPage() {
   const { toast } = useToast();
+  const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState("company");
   const [theme, setTheme] = useState("light");
+  const [companyLogo, setCompanyLogo] = useState<string | null>(null);
+  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const profilePhotoInputRef = useRef<HTMLInputElement>(null);
+  
+  // Load tab from URL params
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab) {
+      setActiveTab(tab);
+    }
+  }, [searchParams]);
   
   // Company settings
   const [companyData, setCompanyData] = useState({
@@ -116,10 +141,143 @@ export default function SettingsPage() {
     trackingInterval: "30",
   });
 
+  // Load saved settings from localStorage on mount
+  useEffect(() => {
+    try {
+      const savedCompany = localStorage.getItem(STORAGE_KEYS.company);
+      const savedUser = localStorage.getItem(STORAGE_KEYS.user);
+      const savedNotifications = localStorage.getItem(STORAGE_KEYS.notifications);
+      const savedLoadDefaults = localStorage.getItem(STORAGE_KEYS.loadDefaults);
+      const savedLogo = localStorage.getItem(STORAGE_KEYS.companyLogo);
+      const savedProfilePhoto = localStorage.getItem(STORAGE_KEYS.profilePhoto);
+      
+      if (savedCompany) setCompanyData(JSON.parse(savedCompany));
+      if (savedUser) setUserData(JSON.parse(savedUser));
+      if (savedNotifications) setNotifications(JSON.parse(savedNotifications));
+      if (savedLoadDefaults) setLoadDefaults(JSON.parse(savedLoadDefaults));
+      if (savedLogo) setCompanyLogo(savedLogo);
+      if (savedProfilePhoto) setProfilePhoto(savedProfilePhoto);
+    } catch (error) {
+      console.error('Error loading settings from localStorage:', error);
+    }
+  }, []);
+
   const handleSave = () => {
+    try {
+      // Save all settings to localStorage
+      localStorage.setItem(STORAGE_KEYS.company, JSON.stringify(companyData));
+      localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(userData));
+      localStorage.setItem(STORAGE_KEYS.notifications, JSON.stringify(notifications));
+      localStorage.setItem(STORAGE_KEYS.loadDefaults, JSON.stringify(loadDefaults));
+      if (companyLogo) {
+        localStorage.setItem(STORAGE_KEYS.companyLogo, companyLogo);
+      }
+      if (profilePhoto) {
+        localStorage.setItem(STORAGE_KEYS.profilePhoto, profilePhoto);
+      }
+      
+      toast({
+        title: "Settings Saved",
+        description: "Your settings have been updated successfully.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error Saving Settings",
+        description: "Failed to save settings. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: "Invalid File Type",
+        description: "Please upload an image file (PNG, JPG, etc.)",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate file size (5MB max)
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        title: "File Too Large",
+        description: "Please upload an image smaller than 5MB.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Read file and convert to base64
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const base64 = e.target?.result as string;
+      setCompanyLogo(base64);
+      toast({
+        title: "Logo Uploaded",
+        description: "Company logo has been uploaded. Click Save to keep changes.",
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveLogo = () => {
+    setCompanyLogo(null);
+    localStorage.removeItem(STORAGE_KEYS.companyLogo);
     toast({
-      title: "Settings Saved",
-      description: "Your settings have been updated successfully.",
+      title: "Logo Removed",
+      description: "Company logo has been removed.",
+    });
+  };
+
+  const handleProfilePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: "Invalid File Type",
+        description: "Please upload an image file (PNG, JPG, etc.)",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate file size (2MB max)
+    if (file.size > 2 * 1024 * 1024) {
+      toast({
+        title: "File Too Large",
+        description: "Please upload an image smaller than 2MB.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Read file and convert to base64
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const base64 = e.target?.result as string;
+      setProfilePhoto(base64);
+      toast({
+        title: "Photo Uploaded",
+        description: "Profile photo has been uploaded. Click Save to keep changes.",
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveProfilePhoto = () => {
+    setProfilePhoto(null);
+    localStorage.removeItem(STORAGE_KEYS.profilePhoto);
+    toast({
+      title: "Photo Removed",
+      description: "Profile photo has been removed.",
     });
   };
 
@@ -127,19 +285,19 @@ export default function SettingsPage() {
     <AppLayout>
       <div className="flex flex-col h-full">
         {/* Header */}
-        <div className="flex-shrink-0 border-b bg-white p-4">
-          <div className="flex items-center justify-between">
+        <div className="flex-shrink-0 border-b bg-white p-3 md:p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                <Settings className="w-6 h-6 text-brand-600" />
+              <h1 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-2">
+                <Settings className="w-5 h-5 md:w-6 md:h-6 text-brand-600" />
                 Settings
               </h1>
-              <p className="text-muted-foreground text-sm mt-1">
+              <p className="text-muted-foreground text-xs md:text-sm mt-1">
                 Manage your company, profile, and application preferences
               </p>
             </div>
-            <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={handleSave}>
-              <Save className="w-4 h-4 mr-2" />
+            <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white text-xs md:text-sm" onClick={handleSave}>
+              <Save className="w-4 h-4 mr-1 md:mr-2" />
               Save Changes
             </Button>
           </div>
@@ -147,39 +305,39 @@ export default function SettingsPage() {
 
         {/* Content */}
         <div className="flex-1 overflow-auto">
-          <div className="flex h-full">
+          <div className="flex flex-col md:flex-row h-full">
             {/* Sidebar Navigation */}
-            <div className="w-64 border-r bg-slate-50/50 p-4">
-              <nav className="space-y-1">
+            <div className="md:w-64 border-b md:border-b-0 md:border-r bg-slate-50/50 p-2 md:p-4">
+              <nav className="flex md:flex-col gap-1 overflow-x-auto md:overflow-visible">
                 {[
-                  { id: "company", label: "Company Profile", icon: Building2 },
-                  { id: "profile", label: "My Profile", icon: User },
+                  { id: "company", label: "Company", icon: Building2 },
+                  { id: "profile", label: "Profile", icon: User },
                   { id: "notifications", label: "Notifications", icon: Bell },
                   { id: "security", label: "Security", icon: Lock },
                   { id: "appearance", label: "Appearance", icon: Palette },
                   { id: "loads", label: "Load Defaults", icon: Truck },
-                  { id: "billing", label: "Billing & Plans", icon: CreditCard },
-                  { id: "team", label: "Team Members", icon: Users },
+                  { id: "billing", label: "Billing", icon: CreditCard },
+                  { id: "team", label: "Team", icon: Users },
                 ].map((item) => (
                   <button
                     key={item.id}
                     onClick={() => setActiveTab(item.id)}
-                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+                    className={`flex items-center gap-2 md:gap-3 px-2 md:px-3 py-1.5 md:py-2 rounded-lg text-xs md:text-sm transition-colors whitespace-nowrap ${
                       activeTab === item.id
                         ? "bg-white shadow-sm text-brand-600 font-medium"
                         : "text-slate-600 hover:bg-white hover:text-slate-900"
                     }`}
                   >
                     <item.icon className="w-4 h-4" />
-                    {item.label}
-                    {activeTab === item.id && <ChevronRight className="w-4 h-4 ml-auto" />}
+                    <span className="hidden sm:inline">{item.label}</span>
+                    {activeTab === item.id && <ChevronRight className="w-4 h-4 ml-auto hidden md:block" />}
                   </button>
                 ))}
               </nav>
             </div>
 
             {/* Main Content */}
-            <div className="flex-1 p-6 overflow-auto">
+            <div className="flex-1 p-3 md:p-6 overflow-auto">
               {/* Company Profile */}
               {activeTab === "company" && (
                 <div className="max-w-3xl space-y-6">
@@ -197,11 +355,33 @@ export default function SettingsPage() {
                       <CardDescription>Upload your company logo for documents and branding</CardDescription>
                     </CardHeader>
                     <CardContent className="flex items-center gap-6">
-                      <div className="w-24 h-24 rounded-lg border-2 border-dashed border-slate-300 flex items-center justify-center bg-slate-50">
-                        <Building2 className="w-10 h-10 text-slate-400" />
+                      <div className="w-24 h-24 rounded-lg border-2 border-dashed border-slate-300 flex items-center justify-center bg-slate-50 overflow-hidden relative">
+                        {companyLogo ? (
+                          <>
+                            <img src={companyLogo} alt="Company Logo" className="w-full h-full object-cover" />
+                            <button 
+                              onClick={handleRemoveLogo}
+                              className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-0.5 hover:bg-red-600"
+                              aria-label="Remove logo"
+                              title="Remove logo"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </>
+                        ) : (
+                          <Building2 className="w-10 h-10 text-slate-400" />
+                        )}
                       </div>
                       <div className="space-y-2">
-                        <Button variant="outline" size="sm">
+                        <input
+                          type="file"
+                          ref={fileInputRef}
+                          onChange={handleLogoUpload}
+                          accept="image/*"
+                          className="hidden"
+                          aria-label="Upload company logo"
+                        />
+                        <Button variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
                           <Upload className="w-4 h-4 mr-2" />
                           Upload Logo
                         </Button>
@@ -352,15 +532,39 @@ export default function SettingsPage() {
                       <CardTitle className="text-base">Profile Photo</CardTitle>
                     </CardHeader>
                     <CardContent className="flex items-center gap-6">
-                      <Avatar className="w-20 h-20">
-                        <AvatarImage src="/placeholder-avatar.jpg" />
-                        <AvatarFallback className="text-xl bg-brand-100 text-brand-700">
-                          {userData.firstName[0]}
-                          {userData.lastName[0]}
-                        </AvatarFallback>
-                      </Avatar>
+                      <div className="relative">
+                        <Avatar className="w-20 h-20">
+                          {profilePhoto ? (
+                            <AvatarImage src={profilePhoto} />
+                          ) : (
+                            <AvatarImage src="/placeholder-avatar.jpg" />
+                          )}
+                          <AvatarFallback className="text-xl bg-brand-100 text-brand-700">
+                            {userData.firstName[0]}
+                            {userData.lastName[0]}
+                          </AvatarFallback>
+                        </Avatar>
+                        {profilePhoto && (
+                          <button 
+                            onClick={handleRemoveProfilePhoto}
+                            className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-0.5 hover:bg-red-600"
+                            aria-label="Remove profile photo"
+                            title="Remove profile photo"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        )}
+                      </div>
                       <div className="space-y-2">
-                        <Button variant="outline" size="sm">
+                        <input
+                          type="file"
+                          ref={profilePhotoInputRef}
+                          onChange={handleProfilePhotoUpload}
+                          accept="image/*"
+                          className="hidden"
+                          aria-label="Upload profile photo"
+                        />
+                        <Button variant="outline" size="sm" onClick={() => profilePhotoInputRef.current?.click()}>
                           <Camera className="w-4 h-4 mr-2" />
                           Change Photo
                         </Button>

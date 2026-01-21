@@ -109,6 +109,22 @@ export async function signUpWithEmail(
     // Create session cookie via API
     await createSessionFromCredential(credential);
     
+    // Create tenant for the new user (or assign to demo tenant)
+    try {
+      const idToken = await credential.user.getIdToken();
+      await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          idToken,
+          displayName: `${data.firstName} ${data.lastName}`,
+        }),
+      });
+    } catch (tenantError) {
+      // Log but don't fail signup - tenant can be created later
+      console.error('Failed to create tenant:', tenantError);
+    }
+    
     return { user, error: null };
   } catch (error: unknown) {
     const authError = mapFirebaseError(error);
@@ -138,6 +154,23 @@ export async function signInWithGoogle(): Promise<{ user: AuthUser | null; error
     
     // Create session cookie via API
     await createSessionFromCredential(credential);
+    
+    // Check if this is a new user - if so, create tenant
+    // Firebase doesn't expose getAdditionalUserInfo in the same way,
+    // so we'll call signup API which handles idempotent tenant creation
+    try {
+      const idToken = await credential.user.getIdToken();
+      await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          idToken,
+          displayName: credential.user.displayName || '',
+        }),
+      });
+    } catch (tenantError) {
+      console.error('Failed to ensure tenant exists:', tenantError);
+    }
     
     return { user, error: null };
   } catch (error: unknown) {
