@@ -27,8 +27,8 @@ const PUBLIC_ROUTES = [
   '/sw.js',
   '/_next',
   '/favicon.ico',
-  '/logo-icon.png',
-  '/logo-full.png',
+  '/logo-icon.PNG',
+  '/logo-full.PNG',
 ];
 
 // API routes that require authentication

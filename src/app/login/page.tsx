@@ -95,7 +95,7 @@ export default function LoginPage() {
           <div className="flex items-center gap-4 mb-12">
             <div className="flex h-16 w-16 items-center justify-center">
               <img 
-                src="/logo-icon.png" 
+                src="/logo-icon.PNG" 
                 alt="Fretum-Freight" 
                 className="h-full w-full object-contain"
               />
@@ -155,7 +155,7 @@ export default function LoginPage() {
           <div className="flex items-center justify-center gap-3 mb-8 lg:hidden">
             <div className="flex h-12 w-12 items-center justify-center">
               <img 
-                src="/logo-icon.png" 
+                src="/logo-icon.PNG" 
                 alt="Fretum-Freight" 
                 className="h-full w-full object-contain"
               />

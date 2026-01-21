@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { 
   Truck, 
   MapPin, 
@@ -400,14 +401,15 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-brand-600 to-brand-700 flex items-center justify-center transition-transform group-hover:scale-105">
-                <Truck className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <span className="text-xl font-bold text-slate-900">Fretum-Freight</span>
-                <span className="hidden sm:inline text-xs text-slate-500 ml-2">TMS</span>
-              </div>
+            <Link href="/" className="flex items-center group transition-transform group-hover:scale-105">
+              <Image 
+                src="/logo-full.PNG" 
+                alt="Fretum-Freight TMS" 
+                width={180} 
+                height={40} 
+                className="h-10 w-auto"
+                priority
+              />
             </Link>
 
             {/* Desktop Navigation */}
@@ -1098,11 +1100,14 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             {/* Brand */}
             <div className="md:col-span-1">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center">
-                  <Truck className="h-6 w-6 text-white" />
-                </div>
-                <span className="text-xl font-bold text-white">Fretum-Freight</span>
+              <div className="flex items-center mb-4">
+                <Image 
+                  src="/logo-full.PNG" 
+                  alt="Fretum-Freight TMS" 
+                  width={180} 
+                  height={40} 
+                  className="h-10 w-auto brightness-0 invert"
+                />
               </div>
               <p className="text-slate-400 text-sm mb-4">
                 Enterprise transportation management for modern logistics companies.

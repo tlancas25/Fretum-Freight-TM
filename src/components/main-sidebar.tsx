@@ -178,7 +178,7 @@ export function MainSidebar() {
               isCollapsed ? "h-8 w-8" : "h-10 w-10"
             )}>
               <img 
-                src="/logo-icon.png" 
+                src="/logo-icon.PNG" 
                 alt="Fretum-Freight" 
                 className="h-full w-full object-contain"
               />

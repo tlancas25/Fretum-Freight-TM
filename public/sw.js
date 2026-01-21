@@ -5,8 +5,8 @@ const STATIC_ASSETS = [
   '/loads',
   '/dispatch',
   '/manifest.json',
-  '/logo-icon.png',
-  '/logo-full.png'
+  '/logo-icon.PNG',
+  '/logo-full.PNG'
 ];
 
 // Install event - cache static assets
@@ -78,8 +78,8 @@ self.addEventListener('push', (event) => {
     const data = event.data.json();
     const options = {
       body: data.body,
-      icon: '/logo-icon.png',
-      badge: '/logo-icon.png',
+      icon: '/logo-icon.PNG',
+      badge: '/logo-icon.PNG',
       vibrate: [100, 50, 100],
       data: {
         url: data.url || '/dashboard'
