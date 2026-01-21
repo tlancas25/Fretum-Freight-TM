@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { 
@@ -828,8 +828,8 @@ export default function LandingPage() {
                 </thead>
                 <tbody>
                   {comparisonFeatures.map((category) => (
-                    <>
-                      <tr key={category.category} className="bg-slate-100">
+                    <React.Fragment key={category.category}>
+                      <tr className="bg-slate-100">
                         <td colSpan={4} className="py-3 px-4 font-semibold text-slate-900">
                           {category.category}
                         </td>
@@ -860,7 +860,7 @@ export default function LandingPage() {
                           </td>
                         </tr>
                       ))}
-                    </>
+                    </React.Fragment>
                   ))}
                 </tbody>
               </table>

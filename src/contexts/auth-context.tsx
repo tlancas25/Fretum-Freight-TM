@@ -8,7 +8,7 @@
  * Copyright (c) 2026 Terrell A Lancaster. All Rights Reserved.
  */
 
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   AuthUser,
@@ -17,10 +17,12 @@ import {
   signInWithGoogle,
   signUpWithEmail,
   signOut as firebaseSignOut,
+  signOutClientOnly,
   resetPassword,
   isFirebaseConfigured,
   SignUpData,
   AuthError,
+  getFirebaseAuth,
 } from '@/lib/firebase';
 
 // =============================================================================
@@ -66,6 +68,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [isConfigured] = useState(isFirebaseConfigured());
+  const isSigningOutRef = useRef(false);
 
   // Fetch user data from API to get role and other server-side data
   const fetchUserData = useCallback(async () => {
@@ -98,14 +101,35 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     const unsubscribe = onAuthStateChange(async (authUser) => {
+      // Skip if we're in the process of signing out to prevent loops
+      if (isSigningOutRef.current) {
+        return;
+      }
+      
       if (authUser) {
-        // Get additional user data from API
+        // Get additional user data from API to verify session is valid
         const userData = await fetchUserData();
-        setUser({
-          ...authUser,
-          role: userData?.role || 'viewer',
-          tenantId: userData?.tenantId,
-        });
+        
+        // Only set user as authenticated if server confirms valid session
+        if (userData) {
+          setUser({
+            ...authUser,
+            role: userData?.role || 'viewer',
+            tenantId: userData?.tenantId,
+          });
+        } else {
+          // Firebase has auth but no valid server session
+          // Sign out from Firebase client only (don't touch server session)
+          console.log('Firebase auth exists but no valid server session - clearing client state');
+          isSigningOutRef.current = true;
+          try {
+            await signOutClientOnly();
+          } catch (e) {
+            console.error('Failed to clear stale client state:', e);
+          }
+          isSigningOutRef.current = false;
+          setUser(null);
+        }
       } else {
         setUser(null);
       }

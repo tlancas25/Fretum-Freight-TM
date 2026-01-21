@@ -12,6 +12,7 @@ export {
   signUpWithEmail,
   signInWithGoogle,
   signOut,
+  signOutClientOnly,
   resetPassword,
   getCurrentUser,
   onAuthStateChange,

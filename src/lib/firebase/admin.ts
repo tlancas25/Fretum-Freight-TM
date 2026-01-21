@@ -17,8 +17,9 @@ let adminAuth: Auth;
  * Initialize Firebase Admin SDK
  * 
  * Uses one of the following authentication methods (in order of priority):
- * 1. Service account JSON from FIREBASE_SERVICE_ACCOUNT_KEY env var
- * 2. Google Application Default Credentials (for GCP environments)
+ * 1. Base64-encoded service account from FIREBASE_SERVICE_ACCOUNT_BASE64 env var
+ * 2. Service account JSON from FIREBASE_SERVICE_ACCOUNT_KEY env var
+ * 3. Google Application Default Credentials (for GCP environments)
  */
 export function getFirebaseAdmin(): App {
   if (!adminApp) {
@@ -28,11 +29,20 @@ export function getFirebaseAdmin(): App {
       adminApp = existingApps[0];
     } else {
       try {
-        // Try to use service account key from environment
+        // Try base64-encoded service account first
+        const serviceAccountBase64 = process.env.FIREBASE_SERVICE_ACCOUNT_BASE64;
         const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
         
-        if (serviceAccountKey) {
-          // Parse the service account JSON
+        if (serviceAccountBase64) {
+          // Decode base64 and parse the service account JSON
+          const decoded = Buffer.from(serviceAccountBase64, 'base64').toString('utf-8');
+          const serviceAccount = JSON.parse(decoded);
+          adminApp = initializeApp({
+            credential: cert(serviceAccount),
+            projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+          });
+        } else if (serviceAccountKey) {
+          // Parse the service account JSON directly
           const serviceAccount = JSON.parse(serviceAccountKey);
           adminApp = initializeApp({
             credential: cert(serviceAccount),

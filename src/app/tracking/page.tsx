@@ -321,13 +321,13 @@ export default function TrackingPage() {
 
   return (
     <AppLayout>
-      <div className="flex flex-col h-full">
+      <div className="flex flex-col h-[calc(100vh-4rem)] overflow-hidden">
         {/* Header */}
-        <div className="flex-shrink-0 border-b bg-white p-4">
-          <div className="flex items-center justify-between mb-4">
+        <div className="flex-shrink-0 border-b bg-white p-3">
+          <div className="flex items-center justify-between mb-3">
             <div>
-              <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                <Navigation className="w-6 h-6 text-brand-600" />
+              <h1 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                <Navigation className="w-5 h-5 text-brand-600" />
                 Live Tracking
               </h1>
               <p className="text-muted-foreground text-sm mt-1">
@@ -346,72 +346,56 @@ export default function TrackingPage() {
             </div>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-4 gap-3">
-            <Card className="p-2.5">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 bg-blue-100 rounded">
-                  <Truck className="w-4 h-4 text-blue-600" />
-                </div>
-                <div>
-                  <p className="text-lg font-bold text-blue-600">{activeVehicles.length}</p>
-                  <p className="text-[10px] text-muted-foreground">Active Vehicles</p>
-                </div>
+          {/* Stats - Compact inline */}
+          <div className="flex items-center gap-4 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="p-1 bg-blue-100 rounded">
+                <Truck className="w-3.5 h-3.5 text-blue-600" />
               </div>
-            </Card>
-            <Card className="p-2.5">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 bg-green-100 rounded">
-                  <Navigation className="w-4 h-4 text-green-600" />
-                </div>
-                <div>
-                  <p className="text-lg font-bold text-green-600">{movingCount}</p>
-                  <p className="text-[10px] text-muted-foreground">Moving</p>
-                </div>
+              <span className="font-semibold text-blue-600">{activeVehicles.length}</span>
+              <span className="text-muted-foreground">Active</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="p-1 bg-green-100 rounded">
+                <Navigation className="w-3.5 h-3.5 text-green-600" />
               </div>
-            </Card>
-            <Card className="p-2.5">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 bg-amber-100 rounded">
-                  <Circle className="w-4 h-4 text-amber-600" />
-                </div>
-                <div>
-                  <p className="text-lg font-bold text-amber-600">{stoppedCount}</p>
-                  <p className="text-[10px] text-muted-foreground">Stopped</p>
-                </div>
+              <span className="font-semibold text-green-600">{movingCount}</span>
+              <span className="text-muted-foreground">Moving</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="p-1 bg-amber-100 rounded">
+                <Circle className="w-3.5 h-3.5 text-amber-600" />
               </div>
-            </Card>
-            <Card className="p-2.5">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 bg-red-100 rounded">
-                  <AlertTriangle className="w-4 h-4 text-red-600" />
-                </div>
-                <div>
-                  <p className="text-lg font-bold text-red-600">{delayedCount}</p>
-                  <p className="text-[10px] text-muted-foreground">Delayed</p>
-                </div>
+              <span className="font-semibold text-amber-600">{stoppedCount}</span>
+              <span className="text-muted-foreground">Stopped</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="p-1 bg-red-100 rounded">
+                <AlertTriangle className="w-3.5 h-3.5 text-red-600" />
               </div>
-            </Card>
+              <span className="font-semibold text-red-600">{delayedCount}</span>
+              <span className="text-muted-foreground">Delayed</span>
+            </div>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 flex overflow-hidden">
+        <div className="flex-1 flex overflow-hidden min-h-0">
           {/* Vehicle List */}
-          <div className="w-80 border-r flex flex-col bg-slate-50">
+          <div className="w-72 border-r flex flex-col bg-slate-50 flex-shrink-0">
             {/* Search & Filter */}
-            <div className="p-3 border-b bg-white space-y-2">
+            <div className="p-2 border-b bg-white space-y-2">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
                   placeholder="Search vehicles..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 h-9"
+                  className="pl-8 h-8 text-sm"
                 />
               </div>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="h-9">
+                <SelectTrigger className="h-8 text-sm">
                   <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -426,8 +410,8 @@ export default function TrackingPage() {
             </div>
 
             {/* Vehicle Cards */}
-            <ScrollArea className="flex-1 p-3">
-              <div className="space-y-2">
+            <ScrollArea className="flex-1 min-h-0">
+              <div className="p-2 space-y-2">
                 {filteredVehicles.map((vehicle) => (
                   <VehicleCard
                     key={vehicle.id}
@@ -437,9 +421,9 @@ export default function TrackingPage() {
                   />
                 ))}
                 {filteredVehicles.length === 0 && (
-                  <div className="text-center py-8 text-muted-foreground">
-                    <Truck className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                    <p className="text-sm">No vehicles found</p>
+                  <div className="text-center py-6 text-muted-foreground">
+                    <Truck className="w-6 h-6 mx-auto mb-2 opacity-50" />
+                    <p className="text-xs">No vehicles found</p>
                   </div>
                 )}
               </div>
@@ -450,6 +434,7 @@ export default function TrackingPage() {
           <div className="flex-1 relative">
             {/* Fleet Map with Google Maps Integration */}
             <FleetMap
+              apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
               vehicles={filteredVehicles.map((v): VehicleMarker => ({
                 id: v.id,
                 name: v.id,
@@ -470,49 +455,49 @@ export default function TrackingPage() {
 
             {/* Selected Vehicle Info Overlay */}
             {selectedVehicleData && (
-              <Card className="absolute bottom-4 left-4 right-4 max-w-lg shadow-xl">
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-4">
+              <Card className="absolute bottom-2 left-2 right-2 max-w-md shadow-lg">
+                <CardContent className="p-3">
+                  <div className="flex items-center gap-3">
                     <div className={cn(
-                      "w-12 h-12 rounded-xl flex items-center justify-center",
+                      "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0",
                       selectedVehicleData.status === "moving" ? "bg-green-100" : 
                       selectedVehicleData.status === "delayed" ? "bg-red-100" : "bg-slate-100"
                     )}>
                       <Truck className={cn(
-                        "w-6 h-6",
+                        "w-5 h-5",
                         selectedVehicleData.status === "moving" ? "text-green-600" :
                         selectedVehicleData.status === "delayed" ? "text-red-600" : "text-slate-600"
                       )} />
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-1">
-                        <div>
-                          <h3 className="font-semibold">{selectedVehicleData.id} - {selectedVehicleData.driver.name}</h3>
-                          <p className="text-sm text-muted-foreground">{selectedVehicleData.location}</p>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="min-w-0">
+                          <h3 className="font-semibold text-sm truncate">{selectedVehicleData.id} - {selectedVehicleData.driver.name}</h3>
+                          <p className="text-xs text-muted-foreground truncate">{selectedVehicleData.location}</p>
                         </div>
                         <VehicleStatusBadge status={selectedVehicleData.status} />
                       </div>
-                      <div className="flex items-center gap-4 mt-3 text-sm">
-                        <div className="flex items-center gap-1.5">
-                          <Gauge className="w-4 h-4 text-muted-foreground" />
-                          <span>{selectedVehicleData.speed} mph</span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <Target className="w-4 h-4 text-muted-foreground" />
-                          <span>ETA: {selectedVehicleData.eta}</span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <Fuel className="w-4 h-4 text-muted-foreground" />
-                          <span>{selectedVehicleData.fuel}%</span>
-                        </div>
-                        <div className="flex items-center gap-1.5 ml-auto">
-                          <Button variant="outline" size="sm">
-                            <Phone className="w-4 h-4 mr-1" />
+                      <div className="flex items-center gap-3 mt-2 text-xs">
+                        <span className="flex items-center gap-1">
+                          <Gauge className="w-3.5 h-3.5 text-muted-foreground" />
+                          {selectedVehicleData.speed} mph
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Target className="w-3.5 h-3.5 text-muted-foreground" />
+                          ETA: {selectedVehicleData.eta}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Fuel className="w-3.5 h-3.5 text-muted-foreground" />
+                          {selectedVehicleData.fuel}%
+                        </span>
+                        <div className="flex items-center gap-1 ml-auto">
+                          <Button variant="outline" size="sm" className="h-7 px-2 text-xs">
+                            <Phone className="w-3 h-3 mr-1" />
                             Call
                           </Button>
-                          <Button variant="outline" size="sm">
-                            <MessageSquare className="w-4 h-4 mr-1" />
-                            Message
+                          <Button variant="outline" size="sm" className="h-7 px-2 text-xs">
+                            <MessageSquare className="w-3 h-3 mr-1" />
+                            Msg
                           </Button>
                         </div>
                       </div>

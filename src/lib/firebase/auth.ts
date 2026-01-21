@@ -164,6 +164,21 @@ export async function signOut(): Promise<void> {
 }
 
 /**
+ * Sign out from Firebase client only (without clearing server session)
+ * Used internally when Firebase has stale auth but server session is invalid
+ */
+export async function signOutClientOnly(): Promise<void> {
+  if (!isFirebaseConfigured()) return;
+
+  try {
+    const auth = getFirebaseAuth();
+    await firebaseSignOut(auth);
+  } catch (error) {
+    console.error('Client sign out error:', error);
+  }
+}
+
+/**
  * Send password reset email
  */
 export async function resetPassword(
@@ -289,12 +304,21 @@ async function createSessionFromCredential(credential: UserCredential): Promise<
   try {
     const idToken = await credential.user.getIdToken();
     
-    await fetch('/api/auth/session', {
+    const response = await fetch('/api/auth/session', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ idToken }),
     });
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('Session creation failed:', response.status, errorData);
+      throw new Error(errorData.error || 'Failed to create session');
+    }
+    
+    console.log('Session created successfully');
   } catch (error) {
     console.error('Failed to create session:', error);
+    throw error; // Re-throw to let caller handle it
   }
 }
