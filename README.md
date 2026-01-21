@@ -1,8 +1,11 @@
-# FocusFreight TMS
+# Fretum-Freight TMS
 
 **Enterprise Transportation Management System**
 
 A modern, full-featured TMS built for freight and logistics companies. Streamline your operations with real-time tracking, dispatch management, invoicing, and comprehensive analytics.
+
+Copyright © 2026 Terrell A Lancaster. All rights reserved.
+See [LICENSE](LICENSE) for details.
 
 ## 🚀 Features
 
@@ -40,10 +43,10 @@ A modern, full-featured TMS built for freight and logistics companies. Streamlin
 
 ```bash
 # Clone the repository
-git clone https://github.com/tlancas25/FocusFreight-TMS.git
+git clone https://github.com/tlancas25/Fretum-Freight-TMS.git
 
 # Navigate to project directory
-cd FocusFreight-TMS
+cd Fretum-Freight-TMS
 
 # Install dependencies
 npm install
@@ -98,4 +101,5 @@ We welcome feedback on:
 
 ## 📄 License
 
-Copyright © 2026 FocusFreight. All rights reserved.
+Copyright © 2026 Terrell A Lancaster. All rights reserved.
+This software is proprietary. See [LICENSE](LICENSE) for details.

@@ -64,8 +64,8 @@ export default function SettingsPage() {
   
   // Company settings
   const [companyData, setCompanyData] = useState({
-    name: "FocusFreight Logistics",
-    legalName: "FocusFreight Logistics LLC",
+    name: "Fretum-Freight Logistics",
+    legalName: "Fretum-Freight Logistics LLC",
     mcNumber: "MC-123456",
     dotNumber: "DOT-7891234",
     scac: "FFLT",
@@ -74,8 +74,8 @@ export default function SettingsPage() {
     state: "CA",
     zip: "90001",
     phone: "(555) 123-4567",
-    email: "dispatch@focusfreight.com",
-    website: "www.focusfreight.com",
+    email: "dispatch@fretumfreight.com",
+    website: "www.fretumfreight.com",
     taxId: "12-3456789",
   });
 
@@ -83,7 +83,7 @@ export default function SettingsPage() {
   const [userData, setUserData] = useState({
     firstName: "John",
     lastName: "Smith",
-    email: "john.smith@focusfreight.com",
+    email: "john.smith@fretumfreight.com",
     phone: "(555) 987-6543",
     role: "Dispatcher",
     department: "Operations",
@@ -934,7 +934,7 @@ export default function SettingsPage() {
                         </div>
                       </div>
                       <p className="text-center text-sm text-muted-foreground">
-                        You have full access to all FocusFreight features. No limitations.
+                        You have full access to all Fretum-Freight features. No limitations.
                       </p>
                     </CardContent>
                   </Card>
@@ -959,10 +959,10 @@ export default function SettingsPage() {
                     <CardContent className="p-0">
                       <div className="divide-y">
                         {[
-                          { name: "John Smith", email: "john@focusfreight.com", role: "Admin", status: "active" },
-                          { name: "Sarah Johnson", email: "sarah@focusfreight.com", role: "Dispatcher", status: "active" },
-                          { name: "Mike Williams", email: "mike@focusfreight.com", role: "Driver Manager", status: "active" },
-                          { name: "Emily Brown", email: "emily@focusfreight.com", role: "Accounting", status: "pending" },
+                          { name: "John Smith", email: "john@fretumfreight.com", role: "Admin", status: "active" },
+                          { name: "Sarah Johnson", email: "sarah@fretumfreight.com", role: "Dispatcher", status: "active" },
+                          { name: "Mike Williams", email: "mike@fretumfreight.com", role: "Driver Manager", status: "active" },
+                          { name: "Emily Brown", email: "emily@fretumfreight.com", role: "Accounting", status: "pending" },
                         ].map((member, idx) => (
                           <div key={idx} className="flex items-center justify-between p-4">
                             <div className="flex items-center gap-3">

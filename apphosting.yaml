@@ -1,7 +1,38 @@
+# Fretum-Freight TMS - Firebase App Hosting Configuration
+# Copyright (c) 2026 Terrell A Lancaster. All Rights Reserved.
+#
 # Settings to manage and configure a Firebase App Hosting backend.
 # https://firebase.google.com/docs/app-hosting/configure
 
 runConfig:
-  # Increase this value if you'd like to automatically spin up
-  # more instances in response to increased traffic.
-  maxInstances: 1
+  # Production scaling configuration
+  # Increase maxInstances based on expected traffic
+  minInstances: 1
+  maxInstances: 10
+  
+  # Resource allocation
+  cpu: 1
+  memoryMiB: 512
+  
+  # Request handling
+  concurrency: 80
+  
+# Environment variables (non-sensitive only)
+# Use Secret Manager for sensitive values
+env:
+  - variable: NODE_ENV
+    value: production
+  - variable: TZ
+    value: America/New_York
+
+# Secrets - Reference from Google Secret Manager
+# Create secrets first: gcloud secrets create SECRET_NAME
+# secrets:
+#   - variable: GOOGLE_GENAI_API_KEY
+#     secret: fretum-freight-genai-key
+#   - variable: SAMSARA_API_KEY
+#     secret: fretum-freight-samsara-key
+#   - variable: STRIPE_SECRET_KEY
+#     secret: fretum-freight-stripe-key
+#   - variable: SENDGRID_API_KEY
+#     secret: fretum-freight-sendgrid-key

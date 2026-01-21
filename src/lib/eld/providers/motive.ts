@@ -1,4 +1,4 @@
-// Motive (formerly KeepTruckin) ELD Provider Implementation - FocusFreight TMS
+// Motive (formerly KeepTruckin) ELD Provider Implementation - Fretum-Freight TMS
 // Note: Motive API requires partnership. This is a placeholder implementation.
 
 import { BaseELDProvider } from '../provider-interface';

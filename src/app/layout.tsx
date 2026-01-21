@@ -3,19 +3,19 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'FocusFreight TMS | Enterprise Transportation Management',
+  title: 'Fretum-Freight TMS | Enterprise Transportation Management',
   description: 'The all-in-one transportation management system built for modern logistics companies. Real-time tracking, dispatch management, invoicing, and more.',
   keywords: ['TMS', 'transportation management', 'freight', 'logistics', 'dispatch', 'trucking'],
-  authors: [{ name: 'FocusFreight' }],
-  creator: 'FocusFreight',
+  authors: [{ name: 'Fretum-Freight' }],
+  creator: 'Fretum-Freight',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'FocusFreight',
+    title: 'Fretum-Freight',
   },
   openGraph: {
-    title: 'FocusFreight TMS | Enterprise Transportation Management',
+    title: 'Fretum-Freight TMS | Enterprise Transportation Management',
     description: 'The all-in-one transportation management system built for modern logistics companies.',
     type: 'website',
   },

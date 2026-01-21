@@ -1,13 +1,14 @@
-# FocusFreight TMS - Private Testing Guide
+# Fretum-Freight TMS - Private Testing Guide
 
 **Version:** 1.0.0-beta  
 **Testing Period:** January 2026
+**Copyright © 2026 Terrell A Lancaster. All Rights Reserved.**
 
 ---
 
 ## Welcome, Tester! 👋
 
-Thank you for participating in the private testing of FocusFreight TMS. Your feedback is invaluable in helping us create the best transportation management system for owner-operators and small carriers.
+Thank you for participating in the private testing of Fretum-Freight TMS. Your feedback is invaluable in helping us create the best transportation management system for owner-operators and small carriers.
 
 ---
 
@@ -157,11 +158,11 @@ Please note:
 
 ### Option 1: GitHub Issues
 Create an issue at:
-https://github.com/tlancas25/FocusFreight-TMS/issues
+https://github.com/tlancas25/Fretum-Freight-TMS/issues
 
 ### Option 2: Email
 Send detailed feedback to:
-support@focusfreight.com
+support@fretumfreight.com
 
 ### Report Template
 ```
@@ -224,10 +225,10 @@ We're especially interested in feedback on these areas:
 
 ## Thank You!
 
-Your testing helps us build a better product. Every bug report, suggestion, and piece of feedback makes FocusFreight TMS stronger.
+Your testing helps us build a better product. Every bug report, suggestion, and piece of feedback makes Fretum-Freight TMS stronger.
 
 Happy testing! 🚚
 
 ---
 
-**FocusFreight TMS** - Built for the modern carrier.
+**Fretum-Freight TMS** - Built for the modern carrier.

@@ -659,7 +659,7 @@ export default function IntegrationsPage() {
             <DialogDescription>
               {selectedIntegration?.id === 'google-maps' 
                 ? "Enter your Google Maps Platform API key to enable interactive maps and route visualization."
-                : "Enter your credentials to connect this integration to FocusFreight TMS."}
+                : "Enter your credentials to connect this integration to Fretum-Freight TMS."}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">

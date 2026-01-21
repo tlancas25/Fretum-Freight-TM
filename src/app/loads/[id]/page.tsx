@@ -132,7 +132,7 @@ const loadData = {
     id: '1',
     name: "James O'Connell",
     phone: '(555) 123-7890',
-    email: 'james.oconnell@focusfreight.com',
+    email: 'james.oconnell@fretumfreight.com',
     truck: 'Volvo VNL 760',
     trailer: 'TRL-4521',
     dotNumber: '3142951',

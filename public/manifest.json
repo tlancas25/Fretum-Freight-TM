@@ -1,6 +1,6 @@
 {
-  "name": "FocusFreight TMS",
-  "short_name": "FocusFreight",
+  "name": "Fretum-Freight TMS",
+  "short_name": "Fretum",
   "description": "Enterprise Transportation Management System",
   "start_url": "/dashboard",
   "display": "standalone",

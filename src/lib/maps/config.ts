@@ -1,4 +1,4 @@
-// Google Maps Configuration and Utilities - FocusFreight TMS
+// Google Maps Configuration and Utilities - Fretum-Freight TMS
 
 // Type declarations for Google Maps
 declare global {
@@ -19,7 +19,7 @@ export interface MapConfig {
 export const DEFAULT_MAP_CONFIG: Omit<MapConfig, 'apiKey'> = {
   defaultCenter: { lat: 39.8283, lng: -98.5795 },
   defaultZoom: 5,
-  mapId: 'FOCUSFREIGHT_MAP',
+  mapId: 'FRETUM_FREIGHT_MAP',
 };
 
 // Truck marker icons for different statuses

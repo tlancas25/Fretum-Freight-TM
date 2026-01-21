@@ -46,12 +46,12 @@ export default function LoginPage() {
             <div className="flex h-16 w-16 items-center justify-center">
               <img 
                 src="/logo-icon.png" 
-                alt="FocusFreight" 
+                alt="Fretum-Freight" 
                 className="h-full w-full object-contain"
               />
             </div>
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">FocusFreight</h1>
+              <h1 className="text-3xl font-bold tracking-tight">Fretum-Freight</h1>
               <p className="text-sm text-white/70 uppercase tracking-widest">Enterprise TMS</p>
             </div>
           </div>
@@ -106,12 +106,12 @@ export default function LoginPage() {
             <div className="flex h-12 w-12 items-center justify-center">
               <img 
                 src="/logo-icon.png" 
-                alt="FocusFreight" 
+                alt="Fretum-Freight" 
                 className="h-full w-full object-contain"
               />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-slate-900">FocusFreight</h1>
+              <h1 className="text-2xl font-bold text-slate-900">Fretum-Freight</h1>
               <p className="text-xs text-slate-500 uppercase tracking-widest">Enterprise TMS</p>
             </div>
           </div>
@@ -132,7 +132,7 @@ export default function LoginPage() {
                     <Input 
                       id="email" 
                       type="email" 
-                      placeholder="john@focusfreight.com" 
+                      placeholder="john@fretumfreight.com" 
                       className="pl-10"
                       required 
                     />

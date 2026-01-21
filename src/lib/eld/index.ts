@@ -1,5 +1,5 @@
 // ELD Service - Unified interface for all ELD providers
-// FocusFreight TMS
+// Fretum-Freight TMS
 
 import { IELDProvider } from './provider-interface';
 import { SamsaraProvider } from './providers/samsara';

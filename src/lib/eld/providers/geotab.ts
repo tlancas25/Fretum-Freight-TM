@@ -1,4 +1,4 @@
-// Geotab ELD Provider Implementation - FocusFreight TMS
+// Geotab ELD Provider Implementation - Fretum-Freight TMS
 // Documentation: https://developers.geotab.com
 
 import { BaseELDProvider } from '../provider-interface';

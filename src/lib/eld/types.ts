@@ -1,4 +1,4 @@
-// ELD Integration Types - FocusFreight TMS
+// ELD Integration Types - Fretum-Freight TMS
 
 // ==================== Core Types ====================
 

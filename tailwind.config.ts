@@ -74,7 +74,7 @@ const config: Config = {
           ring: 'hsl(var(--sidebar-ring))',
           muted: 'hsl(var(--sidebar-muted))',
         },
-        // FocusFreight Brand Colors
+        // Fretum-Freight Brand Colors
         brand: {
           // Direct brand colors (defaults to blue palette)
           50: '#EFF6FF',

@@ -588,7 +588,7 @@ export default function LoadsPage() {
     const printContent = `
       <html>
         <head>
-          <title>FocusFreight - Loads Export</title>
+          <title>Fretum-Freight - Loads Export</title>
           <style>
             body { font-family: Arial, sans-serif; padding: 20px; }
             h1 { color: #0066CC; font-size: 24px; }
@@ -609,7 +609,7 @@ export default function LoadsPage() {
           </style>
         </head>
         <body>
-          <h1>FocusFreight TMS - Loads Report</h1>
+          <h1>Fretum-Freight TMS - Loads Report</h1>
           <p>Generated: ${new Date().toLocaleString()}</p>
           <div class="stats">
             <div class="stat"><div class="stat-value">${activeLoads}</div><div class="stat-label">Active Loads</div></div>

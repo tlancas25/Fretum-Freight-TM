@@ -1,8 +1,9 @@
-# FocusFreight TMS - Product Documentation
+# Fretum-Freight TMS - Product Documentation
 
 **Version:** 1.0.0-beta  
 **Private Testing Release**  
-**Last Updated:** January 19, 2026
+**Last Updated:** January 20, 2026
+**Copyright © 2026 Terrell A Lancaster. All Rights Reserved.**
 
 ---
 
@@ -22,7 +23,7 @@
 
 ## Product Overview
 
-**FocusFreight TMS** is a modern, enterprise-grade Transportation Management System designed specifically for owner-operators and small to medium freight carriers. Built with cutting-edge web technologies, it provides a comprehensive solution for managing every aspect of freight logistics operations.
+**Fretum-Freight TMS** is a modern, enterprise-grade Transportation Management System designed specifically for owner-operators and small to medium freight carriers. Built with cutting-edge web technologies, it provides a comprehensive solution for managing every aspect of freight logistics operations.
 
 ### Target Users
 - Owner-operators managing their own trucks
@@ -70,10 +71,10 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/tlancas25/FocusFreight-TMS.git
+git clone https://github.com/tlancas25/Fretum-Freight-TMS.git
 
 # Navigate to project directory
-cd FocusFreight-TMS
+cd Fretum-Freight-TMS
 
 # Install dependencies
 npm install
@@ -521,7 +522,7 @@ Application configuration:
 
 ### ELD Provider Architecture
 
-FocusFreight includes a comprehensive ELD integration framework with support for:
+Fretum-Freight includes a comprehensive ELD integration framework with support for:
 
 | Provider | API Type | Authentication | Status |
 |----------|----------|----------------|--------|
@@ -674,8 +675,8 @@ Please report any issues found during testing:
 - User Guide: Coming soon
 
 ### Contact
-- Email: support@focusfreight.com
-- GitHub Issues: https://github.com/tlancas25/FocusFreight-TMS/issues
+- Email: support@fretumfreight.com
+- GitHub Issues: https://github.com/tlancas25/Fretum-Freight-TMS/issues
 
 ---
 
@@ -703,7 +704,7 @@ GEOTAB_PASSWORD=
 ## Appendix: Project Structure
 
 ```
-FocusFreight-TMS/
+Fretum-Freight-TMS/
 ├── docs/                    # Documentation
 │   └── PRODUCT_DOCUMENTATION.md
 ├── src/
@@ -744,6 +745,6 @@ FocusFreight-TMS/
 
 ---
 
-**FocusFreight TMS** - Built for the modern carrier.
+**Fretum-Freight TMS** - Built for the modern carrier.
 
-© 2026 FocusFreight. All rights reserved.
+© 2026 Terrell A Lancaster. All rights reserved.

@@ -1,4 +1,4 @@
-// Samsara ELD Provider Implementation - FocusFreight TMS
+// Samsara ELD Provider Implementation - Fretum-Freight TMS
 // Documentation: https://developers.samsara.com
 
 import { BaseELDProvider } from '../provider-interface';
@@ -902,7 +902,7 @@ export class SamsaraProvider extends BaseELDProvider {
     const response = await this.request<SamsaraWebhookResponse>('/webhooks', {
       method: 'POST',
       body: JSON.stringify({
-        name: 'FocusFreight TMS Integration',
+        name: 'Fretum-Freight TMS Integration',
         url: webhookUrl,
         eventTypes: eventTypes,
       }),

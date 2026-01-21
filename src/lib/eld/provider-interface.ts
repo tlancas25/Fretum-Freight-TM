@@ -1,4 +1,4 @@
-// ELD Provider Abstract Interface - FocusFreight TMS
+// ELD Provider Abstract Interface - Fretum-Freight TMS
 
 import {
   AuthToken,

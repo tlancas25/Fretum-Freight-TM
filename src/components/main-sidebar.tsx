@@ -179,14 +179,14 @@ export function MainSidebar() {
             )}>
               <img 
                 src="/logo-icon.png" 
-                alt="FocusFreight" 
+                alt="Fretum-Freight" 
                 className="h-full w-full object-contain"
               />
             </div>
             {!isCollapsed && (
               <div className="flex flex-col">
                 <span className="text-lg font-headline font-bold text-sidebar-foreground tracking-tight">
-                  FocusFreight
+                  Fretum-Freight
                 </span>
                 <span className="text-[10px] uppercase tracking-widest text-sidebar-muted font-medium">
                   Enterprise TMS
@@ -374,7 +374,7 @@ export function MainSidebar() {
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
                   <p className="text-sm font-medium">John Dispatcher</p>
-                  <p className="text-xs text-muted-foreground">john@focusfreight.com</p>
+                  <p className="text-xs text-muted-foreground">john@fretumfreight.com</p>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />

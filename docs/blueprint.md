@@ -1,4 +1,4 @@
-# **App Name**: FocusFreight TMS
+# **App Name**: Fretum-Freight TMS
 
 ## Core Features:
 

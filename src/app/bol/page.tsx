@@ -133,7 +133,7 @@ export default function BOLGeneratorPage() {
     consigneeState: "",
     consigneeZip: "",
     consigneePhone: "",
-    carrierName: "FocusFreight TMS",
+    carrierName: "Fretum-Freight TMS",
     carrierMC: "MC-123456",
     driverName: "",
     truckNumber: "",

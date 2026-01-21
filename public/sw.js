@@ -1,4 +1,4 @@
-const CACHE_NAME = 'focusfreight-v1';
+const CACHE_NAME = 'fretum-freight-v1';
 const STATIC_ASSETS = [
   '/',
   '/dashboard',
@@ -90,7 +90,7 @@ self.addEventListener('push', (event) => {
       ]
     };
     event.waitUntil(
-      self.registration.showNotification(data.title || 'FocusFreight', options)
+      self.registration.showNotification(data.title || 'Fretum-Freight', options)
     );
   }
 });
