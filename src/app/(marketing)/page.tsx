@@ -506,7 +506,7 @@ export default function LandingPage() {
                     <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 group">
+                <Button size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10 group">
                   <Play className="mr-2 h-5 w-5 transition-transform group-hover:scale-110" />
                   Watch Demo
                 </Button>
@@ -875,7 +875,7 @@ export default function LandingPage() {
                 <p className="text-slate-400">Contact us for volume pricing and custom enterprise features.</p>
               </div>
               <div className="flex gap-3">
-                <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+                <Button variant="outline" className="border-white/20 bg-transparent text-white hover:bg-white/10">
                   <PhoneCall className="mr-2 h-4 w-4" />
                   Schedule Call
                 </Button>
@@ -1032,7 +1032,7 @@ export default function LandingPage() {
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+            <Button size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10">
               Schedule Demo
             </Button>
           </div>
