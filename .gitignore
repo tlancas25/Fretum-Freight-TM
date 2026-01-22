@@ -1,3 +1,6 @@
+# Ignore environment files
+.env.local
+.env*
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
