@@ -8,8 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-// Securely load Google Maps API key from environment
-const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -436,7 +434,7 @@ export default function TrackingPage() {
           <div className="flex-1 relative">
             {/* Fleet Map with Google Maps Integration */}
             <FleetMap
-              apiKey={GOOGLE_MAPS_API_KEY}
+              apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
               vehicles={filteredVehicles.map((v): VehicleMarker => ({
                 id: v.id,
                 name: v.id,

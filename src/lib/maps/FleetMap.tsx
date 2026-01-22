@@ -46,7 +46,7 @@ interface FleetMapProps {
 }
 
 export function FleetMap({
-  apiKey,
+  apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   vehicles = [],
   routes = [],
   locations = [],

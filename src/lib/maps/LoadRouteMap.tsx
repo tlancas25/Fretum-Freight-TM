@@ -32,7 +32,7 @@ export interface LoadRouteMapProps {
 }
 
 export function LoadRouteMap({
-  apiKey,
+  apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   pickup,
   delivery,
   currentLocation,
