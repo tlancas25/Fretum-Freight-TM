@@ -191,17 +191,6 @@ const integrations = [
     status: "available",
     features: ["Multi-modal tracking", "Predictive ETAs", "Exception alerts", "Analytics"],
   },
-  {
-    id: "google-maps",
-    name: "Google Maps Platform",
-    description: "Interactive maps, route visualization, and distance calculations for fleet tracking.",
-    category: "tracking",
-    icon: MapPin,
-    status: "available",
-    popular: true,
-    features: ["Interactive fleet maps", "Route visualization", "Distance & ETA calculations", "Traffic data"],
-    apiKeyRequired: true,
-  },
   // Payment & Billing
   {
     id: "quickbooks",

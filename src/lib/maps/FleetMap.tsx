@@ -378,13 +378,15 @@ export function FleetMap({
           })}
         </div>
 
-        {/* API key notice */}
+        {/* API key notice - REMOVED for SaaS provider model */}
+        {/* 
         <div className="absolute bottom-4 left-4 right-4 bg-background/90 backdrop-blur-sm rounded-lg p-3 text-sm">
           <p className="font-medium">Google Maps API Key Required</p>
           <p className="text-muted-foreground text-xs mt-1">
             Add your Google Maps API key in Settings → Integrations to enable live fleet tracking.
           </p>
         </div>
+        */}
 
         {/* Legend */}
         <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm rounded-lg p-3">
