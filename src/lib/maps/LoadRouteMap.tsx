@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from 'react';
-import { DEFAULT_MAP_CONFIG, loadGoogleMapsScript } from './config';
+import { DEFAULT_MAP_CONFIG, loadGoogleMapsScript, GOOGLE_MAPS_API_KEY } from './config';
 import { MapPin, Truck, Navigation, AlertCircle, Map } from 'lucide-react';
 
 export interface LoadRouteMapProps {
@@ -32,7 +32,7 @@ export interface LoadRouteMapProps {
 }
 
 export function LoadRouteMap({
-  apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+  apiKey = GOOGLE_MAPS_API_KEY,
   pickup,
   delivery,
   currentLocation,
