@@ -15,6 +15,8 @@ export interface MapConfig {
   defaultZoom: number;
 }
 
+export const GOOGLE_MAPS_API_KEY = 'AIzaSyAerE4EklVp-HF1jnyS3UpbzabHlxmAI9M';
+
 // Default configuration - center of continental US
 export const DEFAULT_MAP_CONFIG: Omit<MapConfig, 'apiKey'> = {
   defaultCenter: { lat: 39.8283, lng: -98.5795 },

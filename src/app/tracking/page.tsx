@@ -434,7 +434,6 @@ export default function TrackingPage() {
           <div className="flex-1 relative">
             {/* Fleet Map with Google Maps Integration */}
             <FleetMap
-              apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
               vehicles={filteredVehicles.map((v): VehicleMarker => ({
                 id: v.id,
                 name: v.id,
