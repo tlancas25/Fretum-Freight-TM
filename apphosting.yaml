@@ -31,7 +31,7 @@ env:
 # Create secrets first: gcloud secrets create SECRET_NAME
 secrets:
   - variable: NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-    secret: next-public-google-maps-api-key
+    secret: map-keys
   - variable: GOOGLE_GENAI_API_KEY
     secret: fretum-freight-genai-key
   - variable: SAMSARA_API_KEY
