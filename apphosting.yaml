@@ -24,8 +24,6 @@ env:
     value: production
   - variable: TZ
     value: America/New_York
-  - variable: NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-    value: AIzaSyAerE4EklVp-HF1jnyS3UpbzabHlxmAI9M
 
 # Secrets - Reference from Google Secret Manager
 # Create secrets first: gcloud secrets create SECRET_NAME

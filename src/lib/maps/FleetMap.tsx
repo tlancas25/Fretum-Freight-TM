@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { DEFAULT_MAP_CONFIG, TRUCK_MARKERS, loadGoogleMapsScript, GOOGLE_MAPS_API_KEY } from './config';
+import { DEFAULT_MAP_CONFIG, TRUCK_MARKERS, loadGoogleMapsScript } from './config';
 
 export interface VehicleMarker {
   id: string;
@@ -46,7 +46,7 @@ interface FleetMapProps {
 }
 
 export function FleetMap({
-  apiKey = GOOGLE_MAPS_API_KEY,
+  apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
   vehicles = [],
   routes = [],
   locations = [],
