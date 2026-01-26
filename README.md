@@ -2,6 +2,10 @@
 
 **Enterprise Transportation Management System**
 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://ffbackend--fretum-freight-tms.us-east4.hosted.app/dashboard)
+[![License](https://img.shields.io/badge/License-Proprietary-red)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Alpha-orange)](https://github.com/tlancas25/Fretum-Freight-TMS)
+
 A modern, full-featured TMS built for freight and logistics companies. Streamline your operations with real-time tracking, dispatch management, invoicing, and comprehensive analytics.
 
 Copyright © 2026 Terrell A Lancaster. All rights reserved.
@@ -10,28 +14,31 @@ See [LICENSE](LICENSE) for details.
 ## 🚀 Features
 
 ### Core Modules
-- **Dashboard** - Real-time KPIs, revenue charts, active loads tracking, performance metrics
-- **Load Management** - Kanban board view, status tracking, load details, document extraction
-- **Dispatch Board** - Visual dispatch management, driver assignment, real-time status updates
-- **Fleet Management** - Driver and truck management, HOS tracking, equipment status
-- **Invoicing** - Create, send, and track invoices with payment status
-- **Customer Management** - Customer database, contact management, load history
-- **Reports & Analytics** - Revenue trends, driver performance, lane analysis, expense tracking
+- **Dashboard** - Real-time KPIs, revenue charts, active loads tracking, performance metrics.
+- **Load Management** - Kanban board view, status tracking, load details, document extraction.
+- **Dispatch Board** - Visual dispatch management, driver assignment, real-time status updates.
+- **Fleet Management** - Driver and truck management, HOS tracking, equipment status.
+- **Invoicing** - Create, send, and track invoices with payment status.
+- **Customer Management** - Customer database, contact management, load history.
+- **Reports & Analytics** - Revenue trends, driver performance, lane analysis, expense tracking.
 
 ### Additional Features
-- **Document AI** - Extract load details from PDF rate confirmations automatically
-- **BOL Generator** - Create and manage Bills of Lading
-- **Integration Hub** - Connect with ELD providers, accounting software, and more
-- **Settings** - Company profile, user preferences, notification settings
+- **Document AI** - Extract load details from PDF rate confirmations automatically using Google Genkit.
+- **BOL Generator** - Create and manage Bills of Lading.
+- **Integration Hub** - Connect with ELD providers, accounting software, and more.
+- **Settings** - Company profile, user preferences, notification settings.
 
 ## 🛠️ Tech Stack
 
 - **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
 - **UI Components**: Shadcn/UI + Radix UI primitives
-- **Styling**: Tailwind CSS with custom design system
-- **Charts**: Recharts
+- **State Management**: React Context & Hooks
+- **Backend/Database**: Firebase
 - **AI Features**: Google Genkit for document processing
-- **TypeScript**: Full type safety throughout
+- **Charts**: Recharts
+- **Maps**: Google Maps Platform Integration
 
 ## 📦 Getting Started
 
@@ -55,7 +62,7 @@ npm install
 npm run dev
 ```
 
-The app will be available at `http://localhost:9002`
+The app will be available at `http://localhost:9002`.
 
 ## 🎨 Design System
 
